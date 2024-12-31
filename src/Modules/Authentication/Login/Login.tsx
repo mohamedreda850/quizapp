@@ -8,18 +8,7 @@ export default function Login() {
   return (
     <div>
 
-      <form onSubmit={handleSubmit((data)=>console.log(data))}>
-
-
-      {TextFeild({placeholder:'Email',
-         icon:<FaEnvelope />,
-         label:'Email',
-         registerfunction:{...register('email',{required:"email is required"})},
-         error:errors.email && errors.email.message})}
-         
-
-         
-         </form>
+ login
     </div>
   )
 }
