@@ -41,7 +41,7 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path:'/instructor',
+    path:'instructor',
     element:<InstructorLayout />,
     errorElement:<div>404</div>,
     children:[
