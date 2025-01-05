@@ -5,6 +5,10 @@ import Login from './Modules/Authentication/Login/Login'
 import Register from './Modules/Authentication/Register/Register'
 import ForgotPassword from './Modules/Authentication/ForgotPassword/ForgotPassword'
 import ResetPassword from './Modules/Authentication/ResetPassword/ResetPassword'
+import InstructorLayout from './Modules/Layouts/InstructorLayout/InstructorLayout'
+import DashBoard from './Modules/Instructor/DashBoard/DashBoard'
+import ListGroup from './Modules/Instructor/Group/ListGroup/ListGroup'
+import BankOfQuestions from './Modules/Instructor/Quistion/BankOfQuestions/BankOfQuestions'
 
 function App() {
 
@@ -33,6 +37,29 @@ const router = createBrowserRouter([
       {
         path:'reset-password',
         element:<ResetPassword />
+      }
+    ]
+  },
+  {
+    path:'/instructor',
+    element:<InstructorLayout />,
+    errorElement:<div>404</div>,
+    children:[
+      {
+        index:true,
+        element:<DashBoard />
+      },
+      {
+        path:"DashBoard",
+        element:<DashBoard />
+      },
+      {
+        path:"groups",
+        element:<ListGroup />
+      },
+      {
+        path:"quistion-bank",
+        element:<BankOfQuestions />
       }
     ]
   }
