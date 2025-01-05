@@ -27,7 +27,7 @@ export default function Login() {
     try {
       const res = await axiosInstance.post(AUTH_URLS.LOGIN, data);
 
-      localStorage.setItem("token", res.data.data.accessToken);
+      localStorage.setItem("quizToken", res.data.data.accessToken);
       navigate("/register");
     } catch (error) {
       console.log(error);
