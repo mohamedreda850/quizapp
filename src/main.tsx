@@ -7,6 +7,7 @@ import './index.css'
 import App from './App.tsx'
 import { Provider } from 'react-redux'
 import { store } from './redux/index.ts'
+import ForgotPassword from './Modules/Authentication/ForgotPassword/ForgotPassword.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
