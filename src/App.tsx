@@ -9,6 +9,8 @@ import InstructorLayout from './Modules/Layouts/InstructorLayout/InstructorLayou
 import DashBoard from './Modules/Instructor/DashBoard/DashBoard'
 import ListGroup from './Modules/Instructor/Group/ListGroup/ListGroup'
 import BankOfQuestions from './Modules/Instructor/Quistion/BankOfQuestions/BankOfQuestions'
+import InstructorRoute from './Modules/protectedRoutes/InstructorRoute/InstructorRoute'
+import Students from './Modules/Instructor/Students/Students/Students'
 
 function App() {
 
@@ -42,7 +44,7 @@ const router = createBrowserRouter([
   },
   {
     path:'instructor',
-    element:<InstructorLayout />,
+    element:<InstructorRoute><InstructorLayout /></InstructorRoute>,
     errorElement:<div>404</div>,
     children:[
       {
@@ -60,6 +62,9 @@ const router = createBrowserRouter([
       {
         path:"quistion-bank",
         element:<BankOfQuestions />
+      },{
+        path:"students",
+        element:<Students />
       }
     ]
   }
