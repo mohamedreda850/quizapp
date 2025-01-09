@@ -3,7 +3,7 @@ import axios from "axios";
 const baseURL = "https://upskilling-egypt.com:3005/api/";
 export const axiosInstance = axios.create({ baseURL });
 axiosInstance.interceptors.request.use((config) => {
-  config.headers.Authorization = localStorage.getItem("HMSToken");
+  config.headers.Authorization = `bearer ${localStorage.getItem("quizToken")}`
   return config;
 });
 export const QUESTION_URLS = {
@@ -20,3 +20,21 @@ export const GROPU_URLS = {
   UPDATE_GRUOP: (id: string) => `group/${id}`,
   DELETE_GRUOP: (id: string) => `group/${id}`,
 };
+export const STUDENT_URLS = {
+  GET_ALL_STUDENTS: "student",
+  GET_STUDENT_BY_ID: (id: string) => `student/${id}`,
+}
+
+export const QUIZ_URLS={
+  GET_ALL_QUIZ:"quiz",
+  GET_QUIZ_BY_ID:(id:string)=>`quiz/${id}`,
+  CREATE_QUIZ:"quiz",
+  UPDATE_QUIZ:(id:string)=>`quiz/${id}`,
+  DELETE_QUIZ:(id:string)=>`quiz/${id}`
+}
+export const RESULT_URLS={
+  GET_ALL_RESULT:"result",
+  FIRST_FIVE_INCOMMING:"result/incomming",
+  LAST_FIVE_COMPLETED:"result/completed",
+  REASSIGN:(id:string)=>`result/reassign${id}`,
+}

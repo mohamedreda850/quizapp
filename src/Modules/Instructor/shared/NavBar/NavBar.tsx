@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { LuTimer } from "react-icons/lu";
+import { useNavigate } from "react-router-dom";
 
 export default function NavBar() {
-  // Mapping route names to display names
+  const navigate = useNavigate();
   const routeName = {
     "/instructor": "Dashboard",
     "/instructor/groups": "Groups",
@@ -18,7 +19,11 @@ export default function NavBar() {
 
  
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
+const logOut =()=>{
+  localStorage.removeItem("quizUser");
+  localStorage.removeItem("quizToken");
+  navigate("/");
+}
   return (
     <nav className="bg-white border-b border-gray-300 ">
       <div className="max-w-screen-xl mx-auto flex items-center justify-between p-4">
@@ -73,12 +78,12 @@ export default function NavBar() {
              
              
               <div className="py-2">
-                <a
-                  href="#"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                <button
+                  onClick={logOut}
+                  className="block px-4 py-2 w-full text-sm text-gray-700 hover:bg-gray-100"
                 >
                   Logout
-                </a>
+                </button>
               </div>
             </div>
           </div>

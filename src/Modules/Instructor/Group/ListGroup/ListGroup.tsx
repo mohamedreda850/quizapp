@@ -5,6 +5,7 @@ import { FiTrash } from "react-icons/fi";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDone } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
+import { axiosInstance, GROPU_URLS } from "../../../../Services/URLS/INSTRUCTOR_URLS/INSTRUCTORURLS";
 
 export default function ListGroup() {
   interface Group {
@@ -30,14 +31,9 @@ export default function ListGroup() {
 
   const getGroupList = async () => {
     try {
-      const response = await axios.get(
-        "https://upskilling-egypt.com:3005/api/group",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axiosInstance.get(GROPU_URLS.GET_GRUOP);
+      console.log(response.data);
+      
       setGroups(response.data);
       setError(null);
     } catch (error) {
