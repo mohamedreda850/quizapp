@@ -23,6 +23,7 @@ export const GROPU_URLS = {
 export const STUDENT_URLS = {
   GET_ALL_STUDENTS: "student",
   GET_STUDENT_BY_ID: (id: string) => `student/${id}`,
+  TOP_FIVE_STUDENT: `/student/top-five`
 }
 
 export const QUIZ_URLS={
@@ -30,7 +31,8 @@ export const QUIZ_URLS={
   GET_QUIZ_BY_ID:(id:string)=>`quiz/${id}`,
   CREATE_QUIZ:"quiz",
   UPDATE_QUIZ:(id:string)=>`quiz/${id}`,
-  DELETE_QUIZ:(id:string)=>`quiz/${id}`
+  DELETE_QUIZ:(id:string)=>`quiz/${id}`,
+  QUIZ_INCOMMING : `/quiz/incomming`
 }
 export const RESULT_URLS={
   GET_ALL_RESULT:"result",
