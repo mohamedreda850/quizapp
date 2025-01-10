@@ -5,7 +5,6 @@ import sigin from "../../../../assets/Images/Vector (5).png";
 const Icons = () => {
   const location = useLocation();
 
-  // دالة لتحديد إذا كان الـ path الحالي نشط
   const isActiveSignIn = (path: string) =>
     location.pathname === path ||
     (path === "/" && location.pathname === "/login");
