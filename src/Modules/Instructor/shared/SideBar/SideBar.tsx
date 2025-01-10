@@ -1,5 +1,5 @@
 import './SideBar.css'
-import { Box } from '@mui/material';
+
 import { Sidebar, Menu, MenuItem } from 'react-pro-sidebar';
 import homeImg from '../../../../assets/images/Icon-home.png'
 import groupImg from '../../../../assets/images/Icon-group.png'
@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom';
 export default function SideBar() {
   const [activeItem, setActiveItem] = useState('dashboard');  // Store the active item
   return (
-    <Box className="sidebar-container">
+
         <Sidebar>
             <Menu>
                 <MenuItem icon={<img src={homeImg} alt="" />}  component={<Link to="/dashboard" />}
@@ -34,6 +34,6 @@ export default function SideBar() {
                 <MenuItem icon={<img src={helpImg} alt="" />}> Help </MenuItem>
             </Menu>
         </Sidebar>
-    </Box>
+    
   )
 }
