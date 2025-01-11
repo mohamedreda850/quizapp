@@ -3,7 +3,10 @@ import axios from "axios";
 const baseURL = "https://upskilling-egypt.com:3005/api/";
 export const axiosInstance = axios.create({ baseURL });
 axiosInstance.interceptors.request.use((config) => {
+
+
   config.headers.Authorization = `bearer ${localStorage.getItem("quizToken")}`
+
   return config;
 });
 export const QUESTION_URLS = {

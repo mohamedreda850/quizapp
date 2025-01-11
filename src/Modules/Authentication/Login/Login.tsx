@@ -33,7 +33,10 @@ export default function Login() {
       localStorage.setItem("quizUser" , userData)
       localStorage.setItem("quizToken", res?.data?.data?.accessToken);
 
-      navigate("/instructor");
+      console.log();
+      
+      navigate("/DashBoard");
+
     } catch (error) {
       console.log(error);
     }
