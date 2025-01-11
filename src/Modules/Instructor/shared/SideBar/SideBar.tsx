@@ -12,28 +12,29 @@ import { Link } from 'react-router-dom';
 export default function SideBar() {
   const [activeItem, setActiveItem] = useState('dashboard');  // Store the active item
   return (
-
-        <Sidebar>
+<div className='h-screen'>
+        <Sidebar className='h-full bg-[#ffffff]'>
             <Menu>
-                <MenuItem icon={<img src={homeImg} alt="" />}  component={<Link to="/dashboard" />}
-                  active={activeItem === 'dashboard'}  // Conditional active state
-                  onClick={() => setActiveItem('dashboard')}  // Set active item on click
+                <MenuItem icon={<img src={homeImg} alt="" />}   component={<Link to="/dashboard" />}
+                  active={activeItem === 'dashboard'}  
+                  onClick={() => setActiveItem('dashboard')}  
                 > Dashboard </MenuItem>
-                <MenuItem icon={<img src={groupImg} alt="" />} component={<Link to="/groups" />}
-                  active={activeItem === 'groups'}  // Conditional active state
-                  onClick={() => setActiveItem('groups')}  // Set active item on click
+                <MenuItem icon={<img src={groupImg} alt="" />}  component={<Link to="/groups" />}
+                  active={activeItem === 'groups'}  
+                  onClick={() => setActiveItem('groups')}  
                 > Groups </MenuItem>
                 <MenuItem icon={<img src={quizImg} alt="" />}
-                  active={activeItem === 'quizzes'}  // Conditional active state
-                  onClick={() => setActiveItem('quizzes')}  // Set active item on click
+                  active={activeItem === 'quizzes'}  
+                  onClick={() => setActiveItem('quizzes')}  
                 > Quizzes </MenuItem>
                 <MenuItem icon={<img src={resultImg} alt="" />}
-                  active={activeItem === 'results'}  // Conditional active state
-                  onClick={() => setActiveItem('results')}  // Set active item on click
+                  active={activeItem === 'results'}  
+                  onClick={() => setActiveItem('results')}  
                 > Results </MenuItem>
                 <MenuItem icon={<img src={helpImg} alt="" />}> Help </MenuItem>
             </Menu>
         </Sidebar>
+        </div>
     
   )
 }
