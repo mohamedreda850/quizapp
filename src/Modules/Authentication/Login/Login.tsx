@@ -26,14 +26,17 @@ export default function Login() {
   const Submit = async (data: LoginData) => {
     try {
       const res = await axiosInstance.post(AUTH_URLS.LOGIN, data);
+
       const userData =JSON.stringify( res?.data?.data?.profile)
       console.log("userData" , userData);
       
       localStorage.setItem("quizUser" , userData)
       localStorage.setItem("quizToken", res?.data?.data?.accessToken);
+
       console.log();
       
       navigate("/DashBoard");
+
     } catch (error) {
       console.log(error);
     }
