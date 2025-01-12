@@ -4,10 +4,8 @@ const baseURL = "https://upskilling-egypt.com:3005/api/";
 export const axiosInstance = axios.create({ baseURL });
 axiosInstance.interceptors.request.use((config) => {
 
-
   config.headers.Authorization = `bearer ${localStorage.getItem("quizToken")}`
-
-  return config;
+return config;
 });
 export const QUESTION_URLS = {
   GET_ALL_QUESTION: "question",
@@ -23,6 +21,7 @@ export const GROPU_URLS = {
   UPDATE_GRUOP: (id: string) => `group/${id}`,
   DELETE_GRUOP: (id: string) => `group/${id}`,
 };
+
 export const STUDENT_URLS = {
   GET_ALL_STUDENTS: "student",
   GET_STUDENT_BY_ID: (id: string) => `student/${id}`,
@@ -43,3 +42,4 @@ export const RESULT_URLS={
   LAST_FIVE_COMPLETED:"quiz/completed",
   REASSIGN:(id:string)=>`result/reassign${id}`,
 }
+

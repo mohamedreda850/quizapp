@@ -11,6 +11,7 @@ import ListGroup from './Modules/Instructor/Group/ListGroup/ListGroup'
 import BankOfQuestions from './Modules/Instructor/Quistion/BankOfQuestions/BankOfQuestions'
 import InstructorRoute from './Modules/protectedRoutes/InstructorRoute/InstructorRoute'
 import Students from './Modules/Instructor/Students/Students/Students'
+
 import Quizs from './Modules/Instructor/Quizs/Quizs/Quizs'
 import Results from './Modules/Student/Results/Results/Results'
 import CompletedQuizes from './Modules/Student/Results/CompletedQuizes/CompletedQuizes'
@@ -74,14 +75,13 @@ function App() {
           element: <Students />
         },
         {
-          path: "quizes",
-          element: <Quizs />
-        }, 
-       
-        {
-          path: "completed-quizes",
-          element: <CompletedQuizes />
-        }
+        path:"quizes",
+        element:<QuizzesLists />
+      },
+      {
+        path:"quizesDetails",
+        element:<QuizzesDetails />
+      },
       ]
     },{
       path:"student",
@@ -106,6 +106,7 @@ function App() {
     
   
   ])
+
   return (
     <>
 
