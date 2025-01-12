@@ -18,6 +18,8 @@ import CompletedQuizes from './Modules/Student/Results/CompletedQuizes/Completed
 import SDashBoard from './Modules/Student/SDashBoard/SDashBoard'
 import StudentProtectedRoute from './Modules/Student/StudentProtectedRoute/StudentProtectedRoute'
 import StudentLayout from './Modules/Student/StudentLayout/StudentLayout'
+import QuizzesLists from './Modules/Instructor/Quizzes/QuizzesList/QuizzesLists'
+import QuizzesDetails from './Modules/Instructor/Quizzes/QuizzesDetails/QuizzesDetails'
 
 function App() {
 
