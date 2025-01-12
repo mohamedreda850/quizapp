@@ -40,6 +40,6 @@ export const QUIZ_URLS={
 export const RESULT_URLS={
   GET_ALL_RESULT:"result",
   FIRST_FIVE_INCOMMING:"quiz/incomming",
-  LAST_FIVE_COMPLETED:"result/completed",
+  LAST_FIVE_COMPLETED:"quiz/completed",
   REASSIGN:(id:string)=>`result/reassign${id}`,
 }

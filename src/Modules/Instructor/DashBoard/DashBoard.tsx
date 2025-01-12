@@ -7,7 +7,7 @@ import { useEffect, useState } from "react"
 import { axiosInstance, RESULT_URLS, STUDENT_URLS } from "../../../Services/URLS/INSTRUCTOR_URLS/INSTRUCTORURLS"
 export default function DashBoard() {
   const [students, setStudents] = useState([])
-  const [quizes, setQuizes] = useState()
+  const [quizes, setQuizes] = useState([])
   const userImages = [userImg1, userImg2, userImg3];
 const getUpcomingQuizes =async ()=>{
   try {
@@ -15,7 +15,7 @@ const getUpcomingQuizes =async ()=>{
     console.log(data);
     setQuizes(data)
   } catch (error) {
-    console.log();
+    console.log(errorr);
     
   }
 }
@@ -37,7 +37,7 @@ const getUpcomingQuizes =async ()=>{
     <div className='flex'>
       <div className='border p-5 rounded-md w-[50%] m-6 '>
         <h1 className="mb-2">Upcoming 5 quizzes</h1>
-        {quizes?.map((quiz , index)=>(<div className="flex items-center border rounded-md mt-2">
+        {quizes?.map((quiz , index)=>(<div key={index} className="flex items-center border rounded-md mt-2">
           <div
             className="me-2 bg-[#ffeddf]"
           ><img src={index % 2 ? img1 :img2} className="" alt="" /></div>
@@ -54,7 +54,7 @@ const getUpcomingQuizes =async ()=>{
 
       <div className='border p-5 rounded-md w-[40%] m-6 '>
         <h1 className="mb-2">Upcoming 5 quizzes</h1>
-        {students?.map((student ,index) => (<div className="flex items-center border rounded-md mt-2">
+        {students?.map((student ,index) => (<div key={index} className="flex items-center border rounded-md mt-2">
           <div
             className="me-2 bg-[#ffeddf]"
           ><img src={userImages[index % userImages.length]} className="" alt="" /></div>

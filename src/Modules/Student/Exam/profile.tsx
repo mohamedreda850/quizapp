@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function Results() {
+export default function profile() {
   return (
     <div>
-      Results
+      
     </div>
   )
 }

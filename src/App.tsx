@@ -12,83 +12,106 @@ import BankOfQuestions from './Modules/Instructor/Quistion/BankOfQuestions/BankO
 import InstructorRoute from './Modules/protectedRoutes/InstructorRoute/InstructorRoute'
 import Students from './Modules/Instructor/Students/Students/Students'
 import Quizs from './Modules/Instructor/Quizs/Quizs/Quizs'
-import Results from './Modules/Instructor/Results/Results/Results'
-import CompletedQuizes from './Modules/Instructor/Results/CompletedQuizes/CompletedQuizes'
+import Results from './Modules/Student/Results/Results/Results'
+import CompletedQuizes from './Modules/Student/Results/CompletedQuizes/CompletedQuizes'
+import SDashBoard from './Modules/Student/SDashBoard/SDashBoard'
+import StudentProtectedRoute from './Modules/Student/StudentProtectedRoute/StudentProtectedRoute'
+import StudentLayout from './Modules/Student/StudentLayout/StudentLayout'
 
 function App() {
 
-const router = createBrowserRouter([
-  {
-    path:'/',
-    element:<AuthenticationLayout />,
-    errorElement:<div>404</div>,
-    children:[
-      {
-        index:true,
-        element:<Login />
-      },
-      {
-        path:'login',
-        element:<Login />
-      },
-      {
-        path:'register',
-        element:<Register/>
-      },
-      {
-        path:'forgot-password',
-        element:<ForgotPassword />
-      },
-      {
-        path:'reset-password',
-        element:<ResetPassword />
-      }
-    ]
-  },
-  {
-    path:'instructor',
-    element:<InstructorRoute><InstructorLayout /></InstructorRoute>,
-    errorElement:<div>404</div>,
-    children:[
-      {
-        index:true,
-        element:<DashBoard />
-      },
-      {
-        path:"DashBoard",
-        element:<DashBoard />
-      },
-      {
-        path:"groups",
-        element:<ListGroup />
-      },
-      {
-        path:"quistion-bank",
-        element:<BankOfQuestions />
-      },{
-        path:"students",
-        element:<Students />
-      }, 
-      {
-        path:"quizes",
-        element:<Quizs />
-      },{
-        path:"results",
-        element:<Results />
-      },
-      {
-        path:"completed-quizes",
-        element:<CompletedQuizes />
-      }
-    ]
-  }
-])
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <AuthenticationLayout />,
+      errorElement: <div>404</div>,
+      children: [
+        {
+          index: true,
+          element: <Login />
+        },
+        {
+          path: 'login',
+          element: <Login />
+        },
+        {
+          path: 'register',
+          element: <Register />
+        },
+        {
+          path: 'forgot-password',
+          element: <ForgotPassword />
+        },
+        {
+          path: 'reset-password',
+          element: <ResetPassword />
+        }
+      ]
+    },
+    {
+      path: 'instructor',
+      element: <InstructorRoute><InstructorLayout /></InstructorRoute>,
+      errorElement: <div>404</div>,
+      children: [
+        {
+          index: true,
+          element: <DashBoard />
+        },
+        {
+          path: "DashBoard",
+          element: <DashBoard />
+        },
+        {
+          path: "groups",
+          element: <ListGroup />
+        },
+        {
+          path: "quistion-bank",
+          element: <BankOfQuestions />
+        }, 
+        {
+          path: "students",
+          element: <Students />
+        },
+        {
+          path: "quizes",
+          element: <Quizs />
+        }, 
+       
+        {
+          path: "completed-quizes",
+          element: <CompletedQuizes />
+        }
+      ]
+    },{
+      path:"student",
+      element:<StudentProtectedRoute><StudentLayout/></StudentProtectedRoute>,
+      children:[
+        {
+          index:true,
+          element:<SDashBoard/>
+        },
+        {
+          path: "completed-quizes",
+          element: <CompletedQuizes />,
+          children: [
+            {
+              path: 'result/:quizname',
+              element: <Results />
+            }
+          ]
+        },
+      ]
+    },
+    
+  
+  ])
   return (
     <>
-      
-    <RouterProvider router={router} >
-      
-    </RouterProvider>
+
+      <RouterProvider router={router} >
+
+      </RouterProvider>
     </>
   )
 }
