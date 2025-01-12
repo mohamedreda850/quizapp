@@ -26,12 +26,19 @@ export default function Login() {
   const Submit = async (data: LoginData) => {
     try {
       const res = await axiosInstance.post(AUTH_URLS.LOGIN, data);
+
+
       const userData =JSON.stringify( res?.data?.data?.profile)
       console.log("userData" , userData);
       
       localStorage.setItem("quizUser" , userData)
       localStorage.setItem("quizToken", res?.data?.data?.accessToken);
-      navigate("/instructor");
+
+      
+      const role = res.data.data.profile.role
+  
+      navigate(role === "Student" ? '/student' : '/instructor');
+
     } catch (error) {
       console.log(error);
     }

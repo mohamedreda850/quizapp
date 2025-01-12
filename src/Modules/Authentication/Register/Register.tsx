@@ -6,6 +6,7 @@ import { FaKey } from "react-icons/fa";
 import { useForm } from 'react-hook-form';
 import { AUTH_URLS, axiosInstance } from '../../../Services/URLS/AUTH_URLS/AUTH_URLS';
 import { EMAIL_VALIDATION, PASWORD_VALIDATION } from '../../../Services/Validation/VALIDATION';
+import Icons from '../Login/Icons/Icons';
 
 interface RegisterData {
   first_name: string,
@@ -49,6 +50,7 @@ export default function Register() {
      <div>
       <h1 className='text-text my-4'>Create your account and start using QuizWiz!</h1>
      </div>
+     <Icons/>
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='flex'>

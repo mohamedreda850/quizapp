@@ -5,10 +5,18 @@ import { Outlet } from 'react-router-dom'
 
 export default function InstructorLayout() {
   return (
-    <div className='flex flex-col'>
+    <div>
+      <div>
         <NavBar />
-        <div className='flex flex-row'><SideBar />
-      <Outlet /></div>
+      </div>
+      <div className='flex'>
+        
+          <SideBar />
+        
+        <div className='w-full'>
+          <Outlet />
+        </div>
+      </div>
       
     </div>
   )
