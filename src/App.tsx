@@ -11,6 +11,8 @@ import ListGroup from './Modules/Instructor/Group/ListGroup/ListGroup'
 import BankOfQuestions from './Modules/Instructor/Quistion/BankOfQuestions/BankOfQuestions'
 import InstructorRoute from './Modules/protectedRoutes/InstructorRoute/InstructorRoute'
 import Students from './Modules/Instructor/Students/Students/Students'
+import QuizzesLists from './Modules/Instructor/Quizzes/QuizzesList/QuizzesLists'
+import QuizzesDetails from './Modules/Instructor/Quizzes/QuizzesDetails/QuizzesDetails'
 
 function App() {
 
@@ -65,7 +67,16 @@ const router = createBrowserRouter([
       },{
         path:"students",
         element:<Students />
-      }
+      },
+      {
+        path:"quizes",
+        element:<QuizzesLists />
+      },
+      {
+        path:"quizesDetails",
+        element:<QuizzesDetails />
+      },
+      
     ]
   }
 ])
