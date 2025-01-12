@@ -35,7 +35,7 @@ export default function Login() {
 
       console.log();
       
-      navigate("/DashBoard");
+      navigate("/instructor");
 
     } catch (error) {
       console.log(error);

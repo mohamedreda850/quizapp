@@ -5,16 +5,9 @@ import {
   QUESTION_URLS,
 } from "../../../../Services/URLS/INSTRUCTOR_URLS/INSTRUCTORURLS";
 import { FaPlusCircle } from "react-icons/fa";
-import { FaEye } from "react-icons/fa";
 import { FaRegEdit } from "react-icons/fa";
 import { RiDeleteBin6Line } from "react-icons/ri";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
-import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import AddAndUpdateQuestion from "../AddAndUpdateQuestion/AddAndUpdateQuestion";
@@ -26,7 +19,6 @@ interface questionData {
   type: string;
   difficulty: string;
 }
-
 interface QuestionData {
   title: string;
   description: string;
@@ -41,7 +33,6 @@ interface QuestionData {
 }
 
 
-// src/components/Modal.tsx
 
 const Modal: React.FC<{
   isOpen: boolean;
@@ -111,6 +102,7 @@ export default function BankOfQuestions() {
       setValue("options.C", res.data.options.C);
       setValue("options.D", res.data.options.D);
       setValue("type", res.data.type);
+      
       console.log(res);
     } catch (error) {
       console.log(error);
@@ -122,9 +114,8 @@ export default function BankOfQuestions() {
 
   const [questionList, setQuestionList] = useState([]);
   const [selectedId, setSelectedId] = useState("");
-
-
-  const token = localStorage.getItem("quizToken");
+ const [currentPage, setCurrentPage] = useState<number>(1);
+  const [groupsPerPage] = useState<number>(10);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -133,6 +124,7 @@ export default function BankOfQuestions() {
     formState: { errors },
     handleSubmit,
     setValue,
+    reset
   } = useForm();
   const [isEditMode, setIsEditMode] = useState(false);
   const [currentQuestion, setCurrentQuestion] = useState<QuestionData | string>(
@@ -148,7 +140,9 @@ export default function BankOfQuestions() {
           data
         );
         toast.success("Question updated successfully");
+        reset()
       } else {
+        reset()
         response = await axiosInstance.post(
           QUESTION_URLS.CREATE_QUESTION,
           data
@@ -167,15 +161,6 @@ export default function BankOfQuestions() {
       }
     }
   };
-
-  const [currentPage, setCurrentPage] = useState<number>(1);
-   const [groupsPerPage] = useState<number>(10);
-
-  const token = localStorage.getItem("quizToken");
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-
   const handleOpenModal = (id: any) => {
     setIsModalOpen(true);
     setSelectedId(id);
@@ -191,64 +176,36 @@ export default function BankOfQuestions() {
     setIsModalOpen(false);
   };
 
-
   const getQuestions = async () => {
-
-  // pagnation 
-  const indexOfLastQuestion = currentPage * groupsPerPage;
-  const indexOfFirstQuestion = indexOfLastQuestion - groupsPerPage;
-  const currentQuestions = questionList.slice(indexOfFirstQuestion, indexOfLastQuestion);
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-  
-
-  let getQuestions = async () => {
-
     try {
-      let response = await axios.get(
-        "https://upskilling-egypt.com:3005/api/question",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      let response = await axiosInstance.get(QUESTION_URLS.GET_ALL_QUESTION)
+      
       console.log(response.data);
 
-      setQuestionList(response.data);
+      setQuestionList(response.data.slice().reverse());
     } catch (error) {
       console.log(error);
     }
   };
 
-
   const deletQuestion = async () => {
-
-  let deletQuestion = async () => {
-
     try {
-      let response = await axios.delete(
-        `https://upskilling-egypt.com:3005/api/question/${selectedId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      //   toast.success('Item deleted successfuly');
+      let response = await axiosInstance.delete(QUESTION_URLS.DELETE_QUESTION(selectedId))
+     
+     console.log(data);
+     
       getQuestions();
     } catch (error) {
       console.log(error);
-      //   toast.error(error.response.data.message);
+      
     }
 
-    // handleClose()
   };
+  const indexOfLastGroup = currentPage * groupsPerPage;
+  const indexOfFirstGroup = indexOfLastGroup - groupsPerPage;
+  const currentGroups = questionList.slice(indexOfFirstGroup, indexOfLastGroup);
 
-  // function handleDel(id:any) {
-  //   setSelectedId(id)
-  //   deletQuestion();
-  //   getQuestions();
-  // }
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
   useEffect(() => {
     (async () => {
@@ -270,29 +227,16 @@ export default function BankOfQuestions() {
         <h5>Bank Of Questions</h5>
         <button
           onClick={openModal}
-          className="flex text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+          className="flex items-center text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
         >
-          <span>
-
-  
-  useEffect(() => {
-    getQuestions();
-  }, []);
-
-  return (
-    <div className="flex-1">
-      <div className=" flex justify-between items-center p-4">
-        <h5>Bank Of Questions</h5>
-        <button className="flex text-gray-900 items-center m-4 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-          <span className="mx-2">
-
+          <span className="mr-1">
             <FaPlusCircle />
           </span>
           Add Question
         </button>
       </div>
 
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg ">
+      <div className="relative overflow-x-auto shadow-md sm:rounded-lg mx-4">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-white uppercase bg-primary dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -314,11 +258,7 @@ export default function BankOfQuestions() {
             </tr>
           </thead>
           <tbody>
-
-            {questionList.map((question: questionData) => (
-
-            {currentQuestions.map((question: questionData) => (
-
+            {currentGroups.map((question: questionData) => (
               <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <th
                   scope="row"
@@ -329,19 +269,13 @@ export default function BankOfQuestions() {
                 <td className="px-6 py-4">{question.description}</td>
                 <td className="px-6 py-4">{question.difficulty}</td>
                 <td className="px-6 py-4">{question.type}</td>
-                <td className="px-6 py-4 text-center">
+                <td className="px-6 py-4 text-center flex">
                   {/* <a href="#" className="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> */}
-                  <button className="mr-3 text-[#FB7C19]">
-                    <FaEye />
-                  </button>
-
+                 
                   <button
                     onClick={() => handleEdit(question._id)}
                     className="mr-3 text-[#FB7C19]"
                   >
-
-                  <button className="mr-3 text-[#FB7C19]">
-
                     <FaRegEdit />
                   </button>
                   <button
@@ -355,19 +289,7 @@ export default function BankOfQuestions() {
             ))}
           </tbody>
         </table>
-      </div>
-
-
-      <AddAndUpdateQuestion
-        SubmitForm={SubmitForm}
-        register={register}
-        handleSubmit={handleSubmit}
-        errors={errors}
-        isOpen={isOpen}
-        closeModal={closeModal}
-      />
-
-      <div className="text-center py-2">
+        <div className="text-center py-2">
           <button
             onClick={() => paginate(currentPage - 1)}
             disabled={currentPage === 1}
@@ -384,9 +306,16 @@ export default function BankOfQuestions() {
             ...
           </button>
         </div>
-   
+      </div>
 
-
+      <AddAndUpdateQuestion
+        SubmitForm={SubmitForm}
+        register={register}
+        handleSubmit={handleSubmit}
+        errors={errors}
+        isOpen={isOpen}
+        closeModal={closeModal}
+      />
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
