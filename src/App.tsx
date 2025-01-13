@@ -13,8 +13,8 @@ import InstructorRoute from './Modules/protectedRoutes/InstructorRoute/Instructo
 import Students from './Modules/Instructor/Students/Students/Students'
 
 import Quizs from './Modules/Instructor/Quizs/Quizs/Quizs'
-import Results from './Modules/Student/Results/Results/Results'
-import CompletedQuizes from './Modules/Student/Results/CompletedQuizes/CompletedQuizes'
+import Results from './Modules/Instructor/Results/Results/Results'
+import CompletedQuizes from './Modules/Instructor/Results/CompletedQuizes/CompletedQuizes'
 import SDashBoard from './Modules/Student/SDashBoard/SDashBoard'
 import StudentProtectedRoute from './Modules/Student/StudentProtectedRoute/StudentProtectedRoute'
 import StudentLayout from './Modules/Student/StudentLayout/StudentLayout'
@@ -71,52 +71,49 @@ function App() {
         {
           path: "quistion-bank",
           element: <BankOfQuestions />
-        }, 
+        },
         {
           path: "students",
           element: <Students />
         },
         {
-        path:"quizes",
-        element:<QuizzesLists />
-      },
-      {
-        path:"quizesDetails/:id",
-        element:<QuizzesDetails />
-      },
-      ]
-    },{
-      path:"student",
-      element:<StudentProtectedRoute><StudentLayout/></StudentProtectedRoute>,
-      children:[
-        {
-          index:true,
-          element:<SDashBoard/>
+          path: "quizes",
+          element: <QuizzesLists />
         },
         {
-          path: "completed-quizes",
-          element: <CompletedQuizes />,
-          children: [
-            {
-              path: 'result/:quizname',
-              element: <Results />
-            }
-          ]
+          path: "quizesDetails/:id",
+          element: <QuizzesDetails />
         },
+        {
+          path: 'result',
+          element: <Results />
+        }
+          
+        
+  ]
+    }, {
+  path: "student",
+    element: <StudentProtectedRoute><StudentLayout /></StudentProtectedRoute>,
+      children: [
+        {
+          index: true,
+          element: <SDashBoard />
+        },
+
       ]
-    },
+},
     
   
   ])
 
-  return (
-    <>
+return (
+  <>
 
-      <RouterProvider router={router} >
+    <RouterProvider router={router} >
 
-      </RouterProvider>
-    </>
-  )
+    </RouterProvider>
+  </>
+)
 }
 
 export default App
