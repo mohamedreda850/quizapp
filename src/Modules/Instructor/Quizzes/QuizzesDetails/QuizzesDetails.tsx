@@ -1,10 +1,40 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { axiosInstance, QUIZ_URLS } from "../../../../Services/URLS/INSTRUCTOR_URLS/INSTRUCTORURLS";
+import { useForm } from "react-hook-form";
+
 function QuizzesDetails() {
+  const { setValue, register, handleSubmit } = useForm()
+  const [quiz, setQuiz] = useState([])
+  const params = useParams()
+  const getQuizDetails = async () => {
+    try {
+      const { data } = await axiosInstance.get(QUIZ_URLS.GET_QUIZ_BY_ID(params.id))
+      setQuiz(data)
+      console.log(data);
+      setValue("duration", data.duration)
+      setValue("questions_number", data.questions_number)
+      setValue("score_per_question", data.score_per_question)
+      setValue("description", data.description)
+    } catch (error) {
+      console.log(error);
+
+    }
+  }
+  const submit = async (data: any) => {
+    console.log(data);
+
+  }
+  useEffect(() => {
+    getQuizDetails()
+  }, [])
   return (
     <>
       <div className="px-5 py-5">
         <div
-          className="flex align gap-3"
-          style={{ justifyContent: "center", fontWeight: "500" }}
+          className="flex align gap-3 justify-center font-medium "
+          
         >
           <p>Quizzes</p>
           <span>
@@ -22,179 +52,151 @@ function QuizzesDetails() {
               />
             </svg>
           </span>
-          <pre>Data structures quiz one</pre>
+          <pre>{quiz.title}</pre>
         </div>
-        <div className="px-10 my-5" style={{border:"1px solid black"}}>
-        <div>
-          <h2
-            className="mt-5 mb-2"
-            style={{ fontSize: "2rem", fontWeight: "700" }}
-          >
-            Data Structures Quiz One
-          </h2>
-          <div className="flex gap-5">
-            <div className="flex gap-2">
-              <span>
-                <svg
-                  className="mt-1"
-                  width="18"
-                  height="20"
-                  viewBox="0 0 18 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 18.125C0 19.1602 0.839844 20 1.875 20H15.625C16.6602 20 17.5 19.1602 17.5 18.125V7.5H0V18.125ZM12.5 10.4688C12.5 10.2109 12.7109 10 12.9688 10H14.5312C14.7891 10 15 10.2109 15 10.4688V12.0312C15 12.2891 14.7891 12.5 14.5312 12.5H12.9688C12.7109 12.5 12.5 12.2891 12.5 12.0312V10.4688ZM12.5 15.4688C12.5 15.2109 12.7109 15 12.9688 15H14.5312C14.7891 15 15 15.2109 15 15.4688V17.0312C15 17.2891 14.7891 17.5 14.5312 17.5H12.9688C12.7109 17.5 12.5 17.2891 12.5 17.0312V15.4688ZM7.5 10.4688C7.5 10.2109 7.71094 10 7.96875 10H9.53125C9.78906 10 10 10.2109 10 10.4688V12.0312C10 12.2891 9.78906 12.5 9.53125 12.5H7.96875C7.71094 12.5 7.5 12.2891 7.5 12.0312V10.4688ZM7.5 15.4688C7.5 15.2109 7.71094 15 7.96875 15H9.53125C9.78906 15 10 15.2109 10 15.4688V17.0312C10 17.2891 9.78906 17.5 9.53125 17.5H7.96875C7.71094 17.5 7.5 17.2891 7.5 17.0312V15.4688ZM2.5 10.4688C2.5 10.2109 2.71094 10 2.96875 10H4.53125C4.78906 10 5 10.2109 5 10.4688V12.0312C5 12.2891 4.78906 12.5 4.53125 12.5H2.96875C2.71094 12.5 2.5 12.2891 2.5 12.0312V10.4688ZM2.5 15.4688C2.5 15.2109 2.71094 15 2.96875 15H4.53125C4.78906 15 5 15.2109 5 15.4688V17.0312C5 17.2891 4.78906 17.5 4.53125 17.5H2.96875C2.71094 17.5 2.5 17.2891 2.5 17.0312V15.4688ZM15.625 2.5H13.75V0.625C13.75 0.28125 13.4688 0 13.125 0H11.875C11.5312 0 11.25 0.28125 11.25 0.625V2.5H6.25V0.625C6.25 0.28125 5.96875 0 5.625 0H4.375C4.03125 0 3.75 0.28125 3.75 0.625V2.5H1.875C0.839844 2.5 0 3.33984 0 4.375V6.25H17.5V4.375C17.5 3.33984 16.6602 2.5 15.625 2.5Z"
-                    fill="black"
-                  />
-                </svg>
-              </span>
-              <p>12 / 03 / 2023</p>
-            </div>
-            <div className="flex gap-2">
-              <span>
-                <svg
-                  className="mt-1"
-                  width="21"
-                  height="20"
-                  viewBox="0 0 21 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M10.5 0C4.97581 0 0.5 4.47581 0.5 10C0.5 15.5242 4.97581 20 10.5 20C16.0242 20 20.5 15.5242 20.5 10C20.5 4.47581 16.0242 0 10.5 0ZM12.8024 14.1169L9.24597 11.5323C9.12097 11.4395 9.04839 11.2944 9.04839 11.1411V4.35484C9.04839 4.08871 9.26613 3.87097 9.53226 3.87097H11.4677C11.7339 3.87097 11.9516 4.08871 11.9516 4.35484V9.90726L14.5121 11.7702C14.7298 11.9274 14.7742 12.2298 14.6169 12.4476L13.4798 14.0121C13.3226 14.2258 13.0202 14.2742 12.8024 14.1169Z"
-                    fill="black"
-                  />
-                </svg>
-              </span>
-              <p className="">09 : 00</p>
-            </div>
-          </div>
-        </div>
-        <form className="my-5">
+        <div className="px-10 my-5 border w-1/2 rounded-md" >
           <div>
-            <input
-              placeholder="Duration"
-              type="text"
-              className="p-2 "
-              style={{
-                background: "linear-gradient(to right, #FFEDDF, white)",
-                color: "white",
-                fontWeight: "bold",
-                padding: "10px",
-                borderRadius: "10px",
-                width: "100%",
-              }}
-            />
-          </div>
-          <div>
-            <input
-              placeholder="Number of questions"
-              type="text"
-              className="my-3 p-2 "
-              style={{
-                background: "linear-gradient(to right, #FFEDDF, white)",
-                color: "white",
-                fontWeight: "bold",
-                padding: "10px",
-                borderRadius: "10px",
-                width: "100%",
-              }}
-            />
-          </div>
-          <div>
-            <input
-              placeholder="Score per question"
-              type="text"
-              className=" p-2 "
-              style={{
-                background: "linear-gradient(to right, #FFEDDF, white)",
-                color: "white",
-                fontWeight: "bold",
-                padding: "10px",
-                borderRadius: "10px",
-                width: "100%",
-              }}
-            />
-          </div>
-          <div>
-            <input
-              placeholder="Description"
-              type="text"
-              className="my-3 p-2 "
-              style={{
-                background: "linear-gradient(to right, #FFEDDF, white)",
-                color: "white",
-                fontWeight: "bold",
-                padding: "10px",
-                borderRadius: "10px",
-                width: "100%",
-              }}
-            />
-          </div>
-          <div>
-            <input
-              placeholder="Question bank used"
-              type="text"
-              className="p-2 "
-              style={{
-                background: "linear-gradient(to right, #FFEDDF, white)",
-                color: "white",
-                fontWeight: "bold",
-                padding: "10px",
-                borderRadius: "10px",
-                width: "100%",
-              }}
-            />
-          </div>
-          <div>
-            <input className="my-4" type="checkbox" />
-          </div>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          >
-            <div className="flex justify-end">
-              <button
-                style={{
-                  background: "black",
-                  width: "120px",
-                  height: "40px",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "8px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: "8px",
-                  cursor: "pointer",
-                  fontWeight: "bold",
-                  fontSize: "14px",
-                }}
-              >
-                <span style={{ display: "flex", alignItems: "center" }}>
+            <h2
+              className="mt-5 mb-2"
+              style={{ fontSize: "2rem", fontWeight: "700" }}
+            >
+              {quiz.title}
+            </h2>
+            <div className="flex gap-5">
+              <div className="flex gap-2">
+                <span>
                   <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 16 16"
+                    className="mt-1"
+                    width="18"
+                    height="20"
+                    viewBox="0 0 18 20"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M15.5593 4.43846L14.1186 5.87914C13.9717 6.02602 13.7342 6.02602 13.5873 5.87914L10.1184 2.41025C9.97153 2.26337 9.97153 2.02586 10.1184 1.87898L11.5591 0.438299C12.1435 -0.1461 13.0935 -0.1461 13.6811 0.438299L15.5593 2.3165C16.1468 2.9009 16.1468 3.85093 15.5593 4.43846ZM8.88086 3.11653L0.674286 11.3231L0.01176 15.1201C-0.0788686 15.6327 0.368024 16.0764 0.880544 15.9889L4.67757 15.3233L12.8841 7.11669C13.031 6.96981 13.031 6.7323 12.8841 6.58542L9.41526 3.11653C9.26525 2.96965 9.02774 2.96965 8.88086 3.11653ZM3.87754 10.62C3.70566 10.4481 3.70566 10.1731 3.87754 10.0012L8.69023 5.18849C8.86211 5.01661 9.13712 5.01661 9.309 5.18849C9.48088 5.36037 9.48088 5.63538 9.309 5.80726L4.49631 10.62C4.32443 10.7918 4.04942 10.7918 3.87754 10.62ZM2.74937 13.2482H4.24943V14.3826L2.23372 14.7357L1.26181 13.7638L1.61495 11.7481H2.74937V13.2482Z"
-                      fill="white"
+                      d="M0 18.125C0 19.1602 0.839844 20 1.875 20H15.625C16.6602 20 17.5 19.1602 17.5 18.125V7.5H0V18.125ZM12.5 10.4688C12.5 10.2109 12.7109 10 12.9688 10H14.5312C14.7891 10 15 10.2109 15 10.4688V12.0312C15 12.2891 14.7891 12.5 14.5312 12.5H12.9688C12.7109 12.5 12.5 12.2891 12.5 12.0312V10.4688ZM12.5 15.4688C12.5 15.2109 12.7109 15 12.9688 15H14.5312C14.7891 15 15 15.2109 15 15.4688V17.0312C15 17.2891 14.7891 17.5 14.5312 17.5H12.9688C12.7109 17.5 12.5 17.2891 12.5 17.0312V15.4688ZM7.5 10.4688C7.5 10.2109 7.71094 10 7.96875 10H9.53125C9.78906 10 10 10.2109 10 10.4688V12.0312C10 12.2891 9.78906 12.5 9.53125 12.5H7.96875C7.71094 12.5 7.5 12.2891 7.5 12.0312V10.4688ZM7.5 15.4688C7.5 15.2109 7.71094 15 7.96875 15H9.53125C9.78906 15 10 15.2109 10 15.4688V17.0312C10 17.2891 9.78906 17.5 9.53125 17.5H7.96875C7.71094 17.5 7.5 17.2891 7.5 17.0312V15.4688ZM2.5 10.4688C2.5 10.2109 2.71094 10 2.96875 10H4.53125C4.78906 10 5 10.2109 5 10.4688V12.0312C5 12.2891 4.78906 12.5 4.53125 12.5H2.96875C2.71094 12.5 2.5 12.2891 2.5 12.0312V10.4688ZM2.5 15.4688C2.5 15.2109 2.71094 15 2.96875 15H4.53125C4.78906 15 5 15.2109 5 15.4688V17.0312C5 17.2891 4.78906 17.5 4.53125 17.5H2.96875C2.71094 17.5 2.5 17.2891 2.5 17.0312V15.4688ZM15.625 2.5H13.75V0.625C13.75 0.28125 13.4688 0 13.125 0H11.875C11.5312 0 11.25 0.28125 11.25 0.625V2.5H6.25V0.625C6.25 0.28125 5.96875 0 5.625 0H4.375C4.03125 0 3.75 0.28125 3.75 0.625V2.5H1.875C0.839844 2.5 0 3.33984 0 4.375V6.25H17.5V4.375C17.5 3.33984 16.6602 2.5 15.625 2.5Z"
+                      fill="black"
                     />
                   </svg>
                 </span>
-                Edit
-              </button>
+                <p>{new Date(quiz.schadule).toLocaleDateString()} </p>
+              </div>
+              <div className="flex gap-2">
+                <span>
+                  <svg
+                    className="mt-1"
+                    width="21"
+                    height="20"
+                    viewBox="0 0 21 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M10.5 0C4.97581 0 0.5 4.47581 0.5 10C0.5 15.5242 4.97581 20 10.5 20C16.0242 20 20.5 15.5242 20.5 10C20.5 4.47581 16.0242 0 10.5 0ZM12.8024 14.1169L9.24597 11.5323C9.12097 11.4395 9.04839 11.2944 9.04839 11.1411V4.35484C9.04839 4.08871 9.26613 3.87097 9.53226 3.87097H11.4677C11.7339 3.87097 11.9516 4.08871 11.9516 4.35484V9.90726L14.5121 11.7702C14.7298 11.9274 14.7742 12.2298 14.6169 12.4476L13.4798 14.0121C13.3226 14.2258 13.0202 14.2742 12.8024 14.1169Z"
+                      fill="black"
+                    />
+                  </svg>
+                </span>
+                <p className=""> {new Date(quiz.schadule).toLocaleTimeString()}</p>
+              </div>
             </div>
           </div>
+          <form className="my-5" onSubmit={handleSubmit(submit)}>
+            <div className="flex items-center border border-gray-300 rounded-md overflow-hidden my-3 w-full">
+              <div className="bg-orange-100 px-4 py-2 text-black w-1/2">Duration</div>
+              <input
+                {...register('duration')}
+                type="text"
+
+                className="px-4 py-2 text-black w-full bg-transparent rounded-e-md"
+              />
+            </div>
+            <div className="flex items-center border border-gray-300 rounded-md overflow-hidden my-3 w-full">
+              <div className="bg-orange-100 px-4 py-2 text-black w-1/2">Number of questions</div>
+              <input
+                {...register('questions_number')}
+                type="text"
+
+                className="px-4 py-2 text-black w-full bg-transparent rounded-e-md"
+              />
+            </div>
+            <div className="flex items-center border border-gray-300 rounded-md overflow-hidden my-3 w-full">
+              <div className="bg-orange-100 px-4 py-2 text-black w-1/2">Score per question</div>
+              <input
+                {...register('score_per_question')}
+                type="text"
+
+                className="px-4 py-2 text-black w-full bg-transparent rounded-e-md"
+              />
+            </div>
+            <div className="flex items-center border border-gray-300 rounded-md overflow-hidden my-3 w-full">
+              <div className="bg-orange-100 px-4 py-2 text-black w-1/2">Description</div>
+              <input
+                {...register('description')}
+                type="text"
+
+                className="px-4 py-2 text-black w-full bg-transparent rounded-e-md"
+              />
+            </div>
+            <div className="flex items-center border border-gray-300 rounded-md overflow-hidden my-3 w-full">
+              <div className="bg-orange-100 px-4 py-2 text-black w-1/2">Question bank used</div>
+              <select className="px-4 py-2 h-full text-black w-full bg-transparent rounded-e-md" >
+              {quiz?.questions?.map((qu ,idx)=>(
+                <option value={qu._id}>{qu.title}</option>
+              ))}
+              </select>
+             
+              
+            </div>
+
+           
           
-        </form>
+            
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <div className="flex justify-end">
+                <button
+                  style={{
+                    background: "black",
+                    width: "120px",
+                    height: "40px",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "8px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: "8px",
+                    cursor: "pointer",
+                    fontWeight: "bold",
+                    fontSize: "14px",
+                  }}
+                >
+                  <span style={{ display: "flex", alignItems: "center" }}>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 16 16"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M15.5593 4.43846L14.1186 5.87914C13.9717 6.02602 13.7342 6.02602 13.5873 5.87914L10.1184 2.41025C9.97153 2.26337 9.97153 2.02586 10.1184 1.87898L11.5591 0.438299C12.1435 -0.1461 13.0935 -0.1461 13.6811 0.438299L15.5593 2.3165C16.1468 2.9009 16.1468 3.85093 15.5593 4.43846ZM8.88086 3.11653L0.674286 11.3231L0.01176 15.1201C-0.0788686 15.6327 0.368024 16.0764 0.880544 15.9889L4.67757 15.3233L12.8841 7.11669C13.031 6.96981 13.031 6.7323 12.8841 6.58542L9.41526 3.11653C9.26525 2.96965 9.02774 2.96965 8.88086 3.11653ZM3.87754 10.62C3.70566 10.4481 3.70566 10.1731 3.87754 10.0012L8.69023 5.18849C8.86211 5.01661 9.13712 5.01661 9.309 5.18849C9.48088 5.36037 9.48088 5.63538 9.309 5.80726L4.49631 10.62C4.32443 10.7918 4.04942 10.7918 3.87754 10.62ZM2.74937 13.2482H4.24943V14.3826L2.23372 14.7357L1.26181 13.7638L1.61495 11.7481H2.74937V13.2482Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </span>
+                  Edit
+                </button>
+              </div>
+            </div>
+
+          </form>
         </div>
       </div>
     </>

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import img2 from "../../../../../assets/Images/quizzIn2.png";
 import QuizzesCompleted from "../QuizzesCompleted/QuizzesCompleted";
 import { Link } from "react-router-dom";
+import { axiosInstance, QUIZ_URLS } from "../../../../../Services/URLS/INSTRUCTOR_URLS/INSTRUCTORURLS";
 
 interface Quiz {
   id: string;
@@ -17,16 +18,9 @@ function QuizzesInComing() {
 
   const handelLists = async () => {
     try {
-      const res = axios.get<Quiz[]>(
-        "https://upskilling-egypt.com:3005/api/quiz/incomming",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      console.log((await res).data);
-      setLists((await res).data);
+      const res =await axiosInstance.get<Quiz[]>(QUIZ_URLS.QUIZ_INCOMMING)
+      console.log(res.data);
+      setLists(res.data);
     } catch (error) {
       console.log(error);
     }
@@ -81,7 +75,7 @@ function QuizzesInComing() {
                   <p>No. of student’s enrolled: {list.duration}</p>
                   <div className="flex gap-1" style={{ alignItems: "center" }}>
                     <span style={{ fontWeight: "700" }}>
-                      <Link to="/instructor/quizesDetails">{list.status}</Link>{" "}
+                      <Link to={`/instructor/quizesDetails/${list._id}`}>{list.status}</Link>{" "}
                     </span>
                     <span className="pt-1">
                       <svg

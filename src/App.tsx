@@ -81,7 +81,7 @@ function App() {
         element:<QuizzesLists />
       },
       {
-        path:"quizesDetails",
+        path:"quizesDetails/:id",
         element:<QuizzesDetails />
       },
       ]

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function profile() {
+export default function Exam() {
   return (
     <div>
       
