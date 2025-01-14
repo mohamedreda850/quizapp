@@ -12,9 +12,9 @@ import BankOfQuestions from './Modules/Instructor/Quistion/BankOfQuestions/BankO
 import InstructorRoute from './Modules/protectedRoutes/InstructorRoute/InstructorRoute'
 import Students from './Modules/Instructor/Students/Students/Students'
 
-import Quizs from './Modules/Instructor/Quizs/Quizs/Quizs'
+
 import Results from './Modules/Instructor/Results/Results/Results'
-import CompletedQuizes from './Modules/Instructor/Results/CompletedQuizes/CompletedQuizes'
+
 import SDashBoard from './Modules/Student/SDashBoard/SDashBoard'
 import StudentProtectedRoute from './Modules/Student/StudentProtectedRoute/StudentProtectedRoute'
 import StudentLayout from './Modules/Student/StudentLayout/StudentLayout'
