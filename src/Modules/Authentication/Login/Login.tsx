@@ -11,6 +11,7 @@ import {
   AUTH_URLS,
   axiosInstance,
 } from "../../../Services/URLS/AUTH_URLS/AUTH_URLS";
+import { useSelector } from "react-redux";
 interface LoginData {
   email: string;
   password: string;
@@ -22,13 +23,22 @@ export default function Login() {
     formState: { errors },
   } = useForm();
   const navigate = useNavigate();
-
   const Submit = async (data: LoginData) => {
     try {
       const res = await axiosInstance.post(AUTH_URLS.LOGIN, data);
 
-      localStorage.setItem("quizToken", res.data.data.accessToken);
-      navigate("/register");
+
+      const userData =JSON.stringify( res?.data?.data?.profile)
+      console.log("userData" , userData);
+      
+      localStorage.setItem("quizUser" , userData)
+      localStorage.setItem("quizToken", res?.data?.data?.accessToken);
+
+      
+      const role = res.data.data.profile.role
+  
+      navigate(role === "Student" ? '/student' : '/instructor');
+
     } catch (error) {
       console.log(error);
     }
@@ -39,7 +49,7 @@ export default function Login() {
         className="text-text"
         style={{ fontSize: "1.5rem", paddingBlock: "2rem", fontWeight: "700" }}
       >
-        Continue your learning journey with QuizWiz!
+        Continue your learning journey with QuizWiz! 
       </p>
       <Icons />
       <form onSubmit={handleSubmit(Submit)}>

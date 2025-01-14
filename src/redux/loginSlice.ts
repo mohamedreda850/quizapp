@@ -4,13 +4,11 @@ import { jwtDecode } from "jwt-decode";
 export const LoginSlice = createSlice({
     name: 'login',
     initialState: {
-        user: null,
+        user: localStorage.getItem("quizUser"),
 
     },
     reducers: {
-        login: (state, action) => {
-            
-        },
+      
         logout: (state) => {
             state.user = null;
         }

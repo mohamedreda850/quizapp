@@ -1,4 +1,18 @@
-import React from 'react'
+
+import { FaEnvelope } from "react-icons/fa";
+import { MdCheckCircle } from "react-icons/md";
+import { useForm } from "react-hook-form";
+
+import { Link, useNavigate } from "react-router-dom";
+import {
+  AUTH_URLS,
+  axiosInstance,
+} from "../../../Services/URLS/AUTH_URLS/AUTH_URLS";
+import TextFeild from "../../SharedComponents/TextFeild/TextFeild";
+interface ForgitData {
+  email: string;
+  
+}
 
 export default function ForgotPassword() {
   const {
