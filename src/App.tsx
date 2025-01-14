@@ -20,6 +20,7 @@ import StudentProtectedRoute from './Modules/Student/StudentProtectedRoute/Stude
 import StudentLayout from './Modules/Student/StudentLayout/StudentLayout'
 import QuizzesLists from './Modules/Instructor/Quizzes/QuizzesList/QuizzesLists'
 import QuizzesDetails from './Modules/Instructor/Quizzes/QuizzesDetails/QuizzesDetails'
+import Result from './Modules/Student/result/Result'
 
 function App() {
 
@@ -99,6 +100,10 @@ function App() {
           index: true,
           element: <SDashBoard />
         },
+        {
+          path: 'result',
+          element: <Result />
+        }
 
       ]
 },
