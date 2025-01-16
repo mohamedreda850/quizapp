@@ -11,8 +11,6 @@ import ListGroup from "./Modules/Instructor/Group/ListGroup/ListGroup";
 import BankOfQuestions from "./Modules/Instructor/Quistion/BankOfQuestions/BankOfQuestions";
 import InstructorRoute from "./Modules/protectedRoutes/InstructorRoute/InstructorRoute";
 import Students from "./Modules/Instructor/Students/Students/Students";
-
-
 import Results from './Modules/Instructor/Results/Results/Results'
 
 import SDashBoard from './Modules/Student/SDashBoard/SDashBoard'
