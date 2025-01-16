@@ -89,7 +89,7 @@ export default function Login() {
             </button>
           </div>
           <div>
-            <p>
+            <p style={{color:"white"}}>
               Forgot password?{" "}
               <Link
                 style={{ textDecoration: "underline" }}
