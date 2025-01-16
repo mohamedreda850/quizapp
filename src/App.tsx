@@ -115,7 +115,7 @@ function App() {
           path: "joinQuiz",
           element: <JoinQuizModal />
         },
-
+      {
           path: "dashboard",
           element: <SDashBoard />,
         },
