@@ -5,44 +5,50 @@ import { useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../../Services/URLS/INSTRUCTOR_URLS/INSTRUCTORURLS";
 
 
-function JoinQuizModal() {
-  const [isOpen, setIsOpen] = useState(false);
+function JoinQuizModal({ isOpen ,closeModal}:any) {
+
   const navigate = useNavigate();
-  const [isSecondModalOpen, setIsSecondModalOpen] = useState(false); // حالة للمودال الثاني
+  const [isSecondModalOpen, setIsSecondModalOpen] = useState(false); 
+  const [quizId , setQuizId] = useState()
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm();
-
+  const quizIsOver =()=>{
+    alert("Quiz is closed");
+    setIsSecondModalOpen(false);
+  }
   const onSubmit = async (data) => {
     try {
-       await axiosInstance.post(
+       const res =await axiosInstance.post(
         "https://upskilling-egypt.com:3005/api/quiz/join",
         data
       );
-      setIsSecondModalOpen(true);
+      setQuizId(res.data.data.quiz);
+      openSecondModal();
     } catch (error) {
-
-      console.log(error);
+      if(error.response.data.message =="Quiz is closed" ){
+        quizIsOver()
+      }
+      
     }
   };
 
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+ const openSecondModal = () => {
+  setIsSecondModalOpen(true);
+  
+ }
+  
   const closeSecondModal = () => {
-    navigate("/exam");
+    navigate(`/student/exam/${quizId}`);
     setIsSecondModalOpen(false);
   };
 
   return (
     <div className="flex items-center justify-center h-screen">
-      <button
-        onClick={openModal}
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-      >
-        Open Modal
-      </button>
+     
+      
 
       {/* المودال الأول */}
       {isOpen && (
@@ -103,7 +109,9 @@ function JoinQuizModal() {
                     />
                   </svg>
                 </button>
-                <button onClick={closeModal}>
+                <button 
+                onClick={closeModal}
+                >
                   <svg
                     width="20"
                     height="20"

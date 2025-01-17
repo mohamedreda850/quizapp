@@ -42,4 +42,8 @@ export const RESULT_URLS={
   LAST_FIVE_COMPLETED:"quiz/completed",
   REASSIGN:(id:string)=>`result/reassign${id}`,
 }
+export const STUDENT_QUIZ_URLS={
+  QUESTIONS_WITHOUT_ANSWER:(id:string)=>`quiz/without-answers/${id}`,
+SUBMIT_QUESTION:(id:string)=>`quiz/submit/${id}`
+}
 

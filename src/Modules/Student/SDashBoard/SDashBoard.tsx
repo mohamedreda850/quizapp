@@ -4,11 +4,15 @@ import {
   axiosInstance,
   RESULT_URLS,
 } from "../../../Services/URLS/INSTRUCTOR_URLS/INSTRUCTORURLS";
+import JoinQuizModal from "../JoinQuizModal/JoinQuizModal";
+import { Link } from "react-router-dom";
 
 export default function SDashBoard() {
   const [quizes, setQuizes] = useState([]);
   const [completed, setcompleted] = useState([]);
-
+  const [isOpen, setIsOpen] = useState(false);
+  const openModal = () => setIsOpen(true);
+  const closeModal = () => setIsOpen(false);
   const getUpcomingQuizes = async () => {
     try {
       const { data } = await axiosInstance.get(
@@ -37,7 +41,8 @@ export default function SDashBoard() {
 
   return (
     <>
-      <button className=" m-5 relative border p-5 rounded-md px-16">
+
+      <button onClick={openModal} className=" m-5 relative border p-5 rounded-md px-16">
         <div>
           <svg
             className="w-15 h-15"
@@ -74,15 +79,15 @@ export default function SDashBoard() {
         <div className="border p-5 rounded-md w-[50%] m-6">
           <h1 className="font-semibold text-xl">Upcoming quizzes</h1>
           {/* Put start of quizzes array here */}
-          <div className="flex items-center border rounded-md mt-2">
+          {quizes.map((quiz,idx)=>(<div className="flex items-center border rounded-md mt-2">
             <div className="me-2 bg-[#ffeddf]">
               <img src="" className="w-5" alt="" />
             </div>
             <div className="p-3 flex-grow">
               <h2 className="text-lg font-semibold mb-2">
-                Introduction to computer programming
+                {quiz.title}
               </h2>
-              <p className="font-medium text-sm">12 / 3/ 2023 | 9:00 am</p>
+              <p className="font-medium text-sm"> {new Date(quiz.schadule).toLocaleDateString()} | {new Date(quiz.schadule).toLocaleTimeString()} </p>
             </div>
             <div className="flex items-center justify-end p-3">
               <button className="flex items-center space-x-2 font-semibold">
@@ -90,7 +95,8 @@ export default function SDashBoard() {
                 <FaArrowRight className="w-6 h-6 p-1 bg-text text-white rounded-full" />
               </button>
             </div>
-          </div>
+          </div>))}
+          
         </div>
         <div className="border p-5 rounded-md w-[50%] m-6 relative">
           <div className="p-6">
@@ -101,48 +107,47 @@ export default function SDashBoard() {
               <FaArrowRight className="w-6 h-6 p-1 text-text rounded-full" />
             </button>
 
-            <div className="grid grid-cols-4 gap-1 w-full">
-              {/* Header Row */}
-              <div className="bg-black text-white p-2 text-center font-semibold">
-                Group Name
-              </div>
-              <div className="bg-black text-white p-2 text-center font-semibold">
-                No. of Persons
-              </div>
-              <div className="bg-black text-white p-2 text-center font-semibold">
-                Data
-              </div>
-              <div className="bg-black text-white p-2 text-center font-semibold">
-                Details
-              </div>
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+              <table className="w-full text-sm text-left mt-5 rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead className="text-xs text-white uppercase bg-black dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                    <th scope="col" className="px-6 py-3">
+                      Title
+                    </th>
 
-              {/* Data Row 1 */}
-              <div className="border border-[#CCCCCC] p-2 text-center">
-                Group A
-              </div>
-              <div className="border border-[#CCCCCC] p-2 text-center">10</div>
-              <div className="border border-[#CCCCCC] p-2 text-center">
-                March 2025
-              </div>
-              <div className="border border-[#CCCCCC] p-2 text-center">
-                Completed
-              </div>
+                    <th scope="col" className="px-6 py-3">
+                      Participants
+                    </th>
+                    <th scope="col" className="px-6 py-3">
+                      Date
+                    </th>
+                  
+                  </tr>
+                </thead>
+                <tbody>
+                  {completed?.map((quiz, index) => (<tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      {quiz.title}
+                    </th>
 
-              {/* Data Row 2 */}
-              <div className="border border-[#CCCCCC] p-2 text-center">
-                Group B
-              </div>
-              <div className="border border-[#CCCCCC] p-2 text-center">15</div>
-              <div className="border border-[#CCCCCC] p-2 text-center">
-                June 2025
-              </div>
-              <div className="border border-[#CCCCCC] p-2 text-center">
-                Ongoing
-              </div>
+                    <td className="px-6 py-4">
+                      {quiz.participants}
+                    </td>
+                    <td className="px-6 py-4">
+                    {new Date(quiz.schadule).toLocaleDateString()}
+                    </td>
+                    
+                  </tr>))}
+
+
+
+                </tbody>
+              </table>
+            </div>
             </div>
           </div>
         </div>
-      </div>
-    </>
-  );
+        <JoinQuizModal isOpen={isOpen} closeModal={closeModal} />
+      </>
+      );
 }

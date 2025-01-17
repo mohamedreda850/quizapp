@@ -22,6 +22,7 @@ import QuizzesDetails from './Modules/Instructor/Quizzes/QuizzesDetails/QuizzesD
 import JoinQuizModal from './Modules/Student/JoinQuizModal/JoinQuizModal'
 
 import Result from './Modules/Student/result/Result'
+import Exam from "./Modules/Student/Exam/Exam";
 
 
 function App() {
@@ -120,6 +121,9 @@ function App() {
         {
           path: 'result',
           element: <Result />
+        },{
+          path: 'exam/:id',
+          element: <Exam />
         }
 
 
