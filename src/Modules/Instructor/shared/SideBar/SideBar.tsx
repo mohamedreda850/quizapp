@@ -1,7 +1,7 @@
 import "./SideBar.css";
 
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
-import homeImg from "./../../../../assets/images/home-icon.png";
+import homeImg from "./../../../../assets/Images/home-icon.png";
 import groupImg from "./../../../../assets/images/Icon-group.png";
 import quizImg from "./../../../../assets/images/Icon-quiz.png";
 import resultImg from "./../../../../assets/images/Icon-result.png";
