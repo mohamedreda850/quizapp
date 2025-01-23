@@ -49,7 +49,7 @@ export default function Exam() {
   return (
     <section className="flex flex-col items-center justify-center p-[5%] w-full">
       <div className=''>
-      <form onSubmit={handleSubmit(onSubmit)} className="border border-black p-[2%] rounded-md ">
+      <form onSubmit={handleSubmit(onSubmit)} className="border border-black p-[2%] rounded-md w-full">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {questions.map((question, index) => (
           <div key={index} className="border border-black p-[2%] rounded-md">
@@ -118,7 +118,7 @@ export default function Exam() {
       <div className="flex justify-center mt-6">
         <button
           type="submit"
-          className="w-full md:w-1/2 border p-2 rounded-md bg-[#c5d86d] text-white hover:bg-blue-600"
+          className="w-full md:w-1/2 border p-2 rounded-md bg-[#c5d86d] text-white "
         >
           Submit
         </button>
