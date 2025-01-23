@@ -47,6 +47,7 @@ console.log("success");
           placeholder: "Type your email",
           icon: <FaEnvelope />,
           label: " email address",
+          type:"text",
           registerfunction: {
             ...register("email", { required: "emal is required" }),
           },

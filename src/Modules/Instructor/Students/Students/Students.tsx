@@ -28,13 +28,7 @@ export default function Students() {
 
   return (
     <section className='w-full p-3'>
-      <div className='flex items-end '>
-        <button className="flex ml-auto items-center mr-5 px-4 py-2 border rounded-full text-sm font-medium text-black hover:bg-gray-100">
-
-          <FaPlusCircle className="mr-2" />
-          New Quiz
-        </button>
-      </div>
+    
       <div className='m-3 border border-gray-400 rounded-md p-4'>
         <h2>Students List</h2>
         <div className='grid grid-cols-1  lg:grid-cols-2'>

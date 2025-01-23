@@ -7,7 +7,56 @@ import { MdDone } from "react-icons/md";
 import { AiOutlineClose } from "react-icons/ai";
 import { axiosInstance, GROPU_URLS, STUDENT_URLS } from "../../../../Services/URLS/INSTRUCTOR_URLS/INSTRUCTORURLS";
 import Select from 'react-select';
+const Modal: React.FC<{
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+}> = ({ isOpen, onClose, onConfirm }) => {
+  if (!isOpen) return null;
 
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+        <button
+          onClick={onClose}
+          className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 14 14"
+            className="w-4 h-4"
+          >
+            <path
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M1 1l6 6m0 0l6 6M7 7l6-6M7 7l-6 6"
+            />
+          </svg>
+        </button>
+        <h3 className="text-lg font-semibold mb-4">
+          Are you sure you want to delete this product?
+        </h3>
+        <div className="flex justify-center">
+          <button
+            onClick={onConfirm}
+            className="bg-red-600 text-white px-4 py-2 rounded-lg mr-2 hover:bg-red-700"
+          >
+            Yes, I'm sure
+          </button>
+          <button
+            onClick={onClose}
+            className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400"
+          >
+            No, cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
 export default function ListGroup() {
   interface Group {
     name: string;
@@ -16,6 +65,7 @@ export default function ListGroup() {
   }
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [groups, setGroups] = useState<Group[]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -26,6 +76,7 @@ export default function ListGroup() {
     students: [],
     _id: "",
   });
+  const [selectedId, setSelectedId] = useState("");
   const [students, setStudents] = useState([])
   const getStudents = async () => {
     try {
@@ -66,7 +117,31 @@ export default function ListGroup() {
       setError("Error adding group.");
     }
   };
+  const handleOpenModal = (id: any) => {
+    setIsDeleteModalOpen(true);
+    setSelectedId(id);
+  };
+  const handleCloseModal = () => {
+    setIsDeleteModalOpen(false);
+  };
+  const handleConfirmDelete = () => {
+    console.log("Product deleted");
+    deletGruop();
+    setIsDeleteModalOpen(false);
+  };
+  const deletGruop = async () => {
+    try {
+      let response = await axiosInstance.delete(GROPU_URLS.DELETE_GRUOP(selectedId))
+     
+     
+     
+      getGroupList();
+    } catch (error) {
+      console.log(error);
+      
+    }
 
+  };
   const handleEditGroup = async () => {
     try {
       const response = await axiosInstance.put(GROPU_URLS.UPDATE_GRUOP(editingGroup._id), {
@@ -135,7 +210,7 @@ export default function ListGroup() {
                 >
                   <FaRegEdit size={20} />
                 </button>
-                <button className="cursor-pointer p-2">
+                <button onClick={()=>handleOpenModal(group._id)} className="cursor-pointer p-2">
                   <FiTrash size={20} />
                 </button>
               </div>
@@ -230,6 +305,11 @@ export default function ListGroup() {
           </div>
         </div>
       )}
+      <Modal
+        isOpen={isDeleteModalOpen}
+        onClose={handleCloseModal}
+        onConfirm={handleConfirmDelete}
+      />
     </div>
   );
 }

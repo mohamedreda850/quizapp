@@ -28,6 +28,8 @@ function JoinQuizModal({ isOpen ,closeModal}:any) {
       setQuizId(res.data.data.quiz);
       openSecondModal();
     } catch (error) {
+      console.log(error.response);
+      
       if(error.response.data.message =="Quiz is closed" ){
         quizIsOver()
       }

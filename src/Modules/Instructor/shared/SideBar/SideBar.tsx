@@ -33,6 +33,12 @@ const role = parsedUserData?.role;
             onClick={() => setActiveItem("student")} >
               Students
           </MenuItem>}
+          {role == "Instructor" && <MenuItem  icon={<img src={groupImg} alt="" />}
+            component={<Link to="/instructor/quistion-bank" />}
+            active={activeItem === "Quistions"}
+            onClick={() => setActiveItem("Quistions")} >
+              Questions
+          </MenuItem>}
           {role == "Instructor" && <MenuItem
             icon={<img src={groupImg} alt="" />}
             component={<Link to="groups" />}

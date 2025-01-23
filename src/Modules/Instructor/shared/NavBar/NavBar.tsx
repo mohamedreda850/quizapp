@@ -99,9 +99,12 @@ export default function NavBar() {
     } = useForm({ mode: "onChange" });
   const routeName = {
     "/instructor": "Dashboard",
+    "/instructor/dashboard": "Dashboard",
     "/instructor/groups": "Groups",
     "/instructor/quistion-bank": "Questions",
     "/instructor/students": "Students",
+    "/instructor/quizes": "Quizes",
+    "/instructor/result": "Result",
     "/student": "Dashboard",
     "/student/dashboard": "Dashboard",
     "/student/result": "result",

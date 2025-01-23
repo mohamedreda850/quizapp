@@ -21,6 +21,7 @@ export default function Login() {
     register,
     handleSubmit,
     formState: { errors },
+    
   } = useForm();
   const navigate = useNavigate();
   const Submit = async (data: LoginData) => {
@@ -33,7 +34,6 @@ export default function Login() {
       
       localStorage.setItem("quizUser" , userData)
       localStorage.setItem("quizToken", res?.data?.data?.accessToken);
-
       
       const role = res.data.data.profile.role
   
@@ -60,6 +60,7 @@ export default function Login() {
           registerfunction: {
             ...register("email", { required: "emal is required" }),
           },
+          type:'text',
           error: errors.email && errors.email.message,
         })}
 
@@ -67,6 +68,7 @@ export default function Login() {
           {TextFeild({
             placeholder: "Type your Password",
             icon: <FaKey />,
+            type: "password",
             label: "Password",
             registerfunction: {
               ...register("password", { required: "Password Is Required" }),

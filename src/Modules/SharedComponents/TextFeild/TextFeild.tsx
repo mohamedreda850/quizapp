@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 
 
-export default function TextFeild({placeholder, icon, label , registerfunction , error}) {
+export default function TextFeild({placeholder, icon, label , registerfunction , error , type}) {
 
     return (
         <div>
@@ -12,7 +12,7 @@ export default function TextFeild({placeholder, icon, label , registerfunction ,
                     {icon}
                 </div>
                 <input
-                    type="text"
+                    type={type}
                     id="input-group-1"
                     className="bg-primary border-white border-2 text-white text-sm rounded-lg block w-3/4 ps-10 p-2.5 placeholder:text-white"
                     placeholder={placeholder}
