@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { axiosInstance } from "../../../Services/URLS/INSTRUCTOR_URLS/INSTRUCTORURLS";
+import { axiosInstance, STUDENT_QUIZ_URLS } from "../../../Services/URLS/INSTRUCTOR_URLS/INSTRUCTORURLS";
 
 
 function JoinQuizModal({ isOpen ,closeModal}:any) {
@@ -22,7 +22,7 @@ function JoinQuizModal({ isOpen ,closeModal}:any) {
   const onSubmit = async (data) => {
     try {
        const res =await axiosInstance.post(
-        "https://upskilling-egypt.com:3005/api/quiz/join",
+        STUDENT_QUIZ_URLS.JOIN_QUIZ,
         data
       );
       setQuizId(res.data.data.quiz);

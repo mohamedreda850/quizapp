@@ -59,8 +59,8 @@ function QuizzesCompleted() {
             </span>
           </div>
         </div>
-        {lists.slice(0, 3).map((list) => (
-          <table className="table-auto border border-gray-400 w-full ">
+        {lists.slice(0, 3).map((list, idx) => (
+          <table key={idx} className="table-auto border border-gray-400 w-full ">
             <thead>
               <tr className="bg-gray-800 text-white py-4">
                 <th className="border border-gray-400 px-4 py-2">Title</th>

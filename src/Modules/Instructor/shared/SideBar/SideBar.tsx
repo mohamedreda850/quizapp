@@ -37,7 +37,7 @@ const role = parsedUserData?.role;
             icon={<img src={groupImg} alt="" />}
             component={<Link to="groups" />}
             active={activeItem === "groups"}
-            onClick={() => setActiveItem("groups")}
+            onClick={() => setActiveItem("groups")} 
           >
             {" "}
             Groups{" "}

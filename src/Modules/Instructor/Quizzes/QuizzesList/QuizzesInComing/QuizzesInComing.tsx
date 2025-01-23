@@ -13,20 +13,20 @@ interface Quiz {
   status: string;
 }
 function QuizzesInComing() {
-  const [lists, setLists] = useState<Quiz[]>([]);
-  const token = localStorage.getItem("quizToken");
+  const [incomingQuizes, setIncomingQuizes] = useState<Quiz[]>([]);
 
-  const handelLists = async () => {
+
+  const getIncomingQuizes = async () => {
     try {
       const res =await axiosInstance.get<Quiz[]>(QUIZ_URLS.QUIZ_INCOMMING)
       console.log(res.data);
-      setLists(res.data);
+      setIncomingQuizes(res.data);
     } catch (error) {
       console.log(error);
     }
   };
   useEffect(() => {
-    handelLists();
+    getIncomingQuizes();
   }, []);
 
   return (
@@ -42,7 +42,7 @@ function QuizzesInComing() {
           >
             Upcoming quizzes
           </h2>
-          {lists.slice(0, 2).map((list) => (
+          {incomingQuizes.slice(0, 2).map((list) => (
             <div
               className="flex gap-3 py-5 px-5 my-2"
               style={{

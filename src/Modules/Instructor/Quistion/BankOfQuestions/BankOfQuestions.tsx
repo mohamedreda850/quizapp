@@ -10,7 +10,8 @@ import { RiDeleteBin6Line } from "react-icons/ri";
 
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import AddAndUpdateQuestion from "../AddAndUpdateQuestion/AddAndUpdateQuestion";
+
+import QuestionModal from "../AddAndUpdateQuestion/AddAndUpdateQuestion";
 
 interface questionData {
   _id: string;
@@ -109,7 +110,20 @@ export default function BankOfQuestions() {
     }
   };
 
-  const openModal = () => setIsOpen(true);
+  const openModal = () => {
+    setIsEditMode(false);
+    setCurrentQuestion("");
+    reset({
+      title: "",
+      description: "",
+      options: { A: "", B: "", C: "", D: "" },
+      answer: "",
+      type: "",
+    }); 
+    setIsOpen(true); 
+  };
+  
+
   const closeModal = () => setIsOpen(false);
 
   const [questionList, setQuestionList] = useState([]);
@@ -140,14 +154,15 @@ export default function BankOfQuestions() {
           data
         );
         toast.success("Question updated successfully");
-        reset()
+        
       } else {
-        reset()
+        
         response = await axiosInstance.post(
           QUESTION_URLS.CREATE_QUESTION,
           data
         );
         toast.success("Question created successfully");
+        
       }
 
       console.log("Response:", response.data);
@@ -192,7 +207,7 @@ export default function BankOfQuestions() {
     try {
       let response = await axiosInstance.delete(QUESTION_URLS.DELETE_QUESTION(selectedId))
      
-     console.log(data);
+     
      
       getQuestions();
     } catch (error) {
@@ -308,7 +323,7 @@ export default function BankOfQuestions() {
         </div>
       </div>
 
-      <AddAndUpdateQuestion
+      <QuestionModal
         SubmitForm={SubmitForm}
         register={register}
         handleSubmit={handleSubmit}

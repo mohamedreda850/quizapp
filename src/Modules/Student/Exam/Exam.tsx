@@ -18,7 +18,7 @@ export default function Exam() {
       console.log(data.data);
       setquestions(data.data.questions);
     } catch (error) {
-      console.log(error.response.data.message);
+      console.log(error.response);
       if (error.response.data.message == "Quiz is closed") {
         quizIsOver()
       }
@@ -47,7 +47,7 @@ export default function Exam() {
     getQuestions()
   }, [])
   return (
-    <section className="flex flex-col items-center justify-center p-[5%] ">
+    <section className="flex flex-col items-center justify-center p-[5%] w-full">
       <div className=''>
       <form onSubmit={handleSubmit(onSubmit)} className="border border-black p-[2%] rounded-md w-full">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -63,7 +63,7 @@ export default function Exam() {
                 type="radio"
                 value="A"
                 name={`question-${question._id}`}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                className="size-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
               />
               <label htmlFor={`question-${question._id}-option-A`} className="ms-2 text-sm font-medium text-gray-900">
                 {question.options.A}
@@ -77,7 +77,7 @@ export default function Exam() {
                 type="radio"
                 value="B"
                 name={`question-${question._id}`}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                className="size-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
               />
               <label htmlFor={`question-${question._id}-option-B`} className="ms-2 text-sm font-medium text-gray-900">
                 {question.options.B}
@@ -91,7 +91,7 @@ export default function Exam() {
                 type="radio"
                 value="C"
                 name={`question-${question._id}`}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                className="size-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
               />
               <label htmlFor={`question-${question._id}-option-C`} className="ms-2 text-sm font-medium text-gray-900">
                 {question.options.C}
@@ -105,7 +105,7 @@ export default function Exam() {
                 type="radio"
                 value="D"
                 name={`question-${question._id}`}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
+                className="size-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
               />
               <label htmlFor={`question-${question._id}-option-D`} className="ms-2 text-sm font-medium text-gray-900">
                 {question.options.D}

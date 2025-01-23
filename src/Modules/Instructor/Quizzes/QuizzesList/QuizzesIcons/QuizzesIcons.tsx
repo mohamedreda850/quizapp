@@ -11,67 +11,78 @@ import { axiosInstance, GROPU_URLS, QUIZ_URLS } from "../../../../../Services/UR
 
 interface Quiz {
   title: string;
-  description?:string;
-  group:string;
-  questions_number:number;
-  difficulty:string;
-  type:string;
-  schadule:string;
-  duration:number;
-  score_per_question:number;
-  code?:string
-    
-  }
+  description?: string;
+  group: string;
+  questions_number: number;
+  difficulty: string;
+  type: string;
+  schadule: string;
+  duration: number;
+  score_per_question: number;
+  code?: string
 
-  interface Group {
-    name: string;
-    _id?: string;
-  }
+}
 
-  
-  // code modal 
-  const CodeModal: React.FC<{
-    isOpen: boolean;
-    onClose: () => void;
-    code: string;
-  }> = ({ isOpen, onClose,code }) => {
-    if (!isOpen) return null;
-    
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-        <div className="bg-white p-6 rounded-lg shadow-lg max-w-md ">
-        
-          <div className='text-3xl bg-black text-white w-[30px] m-auto rounded-full' >
-          <MdDone/>
-          </div>
-          <h1 className="text-lg font-semibold mb-4 text-center">
+interface Group {
+  name: string;
+  _id?: string;
+}
+
+
+// code modal 
+const CodeModal: React.FC<{
+  isOpen: boolean;
+  onClose: () => void;
+  code: string;
+}> = ({ isOpen, onClose, code }) => {
+  if (!isOpen) return null;
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(code).then(() => {
+      alert("Code copied to clipboard!"); // Provide feedback to the user
+    }).catch((error) => {
+      console.error("Failed to copy code:", error);
+    });
+  };
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-md ">
+
+        <div className='text-3xl bg-black text-white w-[30px] m-auto rounded-full' >
+          <MdDone />
+        </div>
+        <h1 className="text-lg font-semibold mb-4 text-center">
           Quiz was successfully created
-          </h1>
-          <div className="flex  mb-8 border border-solid border-black rounded-2xl relative">
-         <h3 style={{ backgroundColor: 'rgba(255, 237, 223, 1)' }} className="block text-sm font-medium px-2 pt-2 rounded-tl-[1.5rem] rounded-bl-[1.5rem]">CODE:</h3>
-         <p className="w-full p-2  ">{code}</p>
-            <div className='absolute right-[10px] top-[10px] text-[20px]'><FaCopy/></div>
-                
-          </div>
-          <div className="flex justify-center">
-            
-            <button
-              onClick={onClose}
-              className="bg-[#C5D86D] text-gray-800 px-10 py-1 rounded-2xl hover:bg-gray-400"
-            >
-              Close
-            </button>
-          </div>
+        </h1>
+        <div className="flex  mb-8 border border-solid border-black rounded-2xl relative">
+          <h3 style={{ backgroundColor: 'rgba(255, 237, 223, 1)' }} className="block text-sm font-medium px-2 pt-2 rounded-tl-[1.5rem] rounded-bl-[1.5rem]">CODE:</h3>
+          <p className="w-full p-2  ">{code}</p>
+          <button
+            className="absolute right-[10px] top-[10px] text-[20px] text-gray-500 hover:text-black"
+            onClick={copyToClipboard}
+          >
+            <FaCopy />
+          </button>
+
+        </div>
+        <div className="flex justify-center">
+
+          <button
+            onClick={onClose}
+            className="bg-[#C5D86D] text-gray-800 px-10 py-1 rounded-2xl hover:bg-gray-400"
+          >
+            Close
+          </button>
         </div>
       </div>
-    );
-  };
+    </div>
+  );
+};
 function QuizzesIcons() {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalCodeOpen, setIsModaCodelOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  const [code, setCode] = useState(''); 
+  const [code, setCode] = useState('');
   const [groups, setGroups] = useState<Group[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -84,12 +95,12 @@ function QuizzesIcons() {
     setCode('');
   };
 
-  const{
-    formState:{isSubmitting,errors},
+  const {
+    formState: { isSubmitting, errors },
     handleSubmit,
     register,
     setValue
-  } = useForm({mode:"onChange"});
+  } = useForm({ mode: "onChange" });
 
   const getGroupList = async () => {
     try {
@@ -106,26 +117,27 @@ function QuizzesIcons() {
     getGroupList();
   }, []);
 
-  const handleAddQuiz = async (data:Quiz) => {
+  const handleAddQuiz = async (data: Quiz) => {
     try {
       const response = await axiosInstance.post(QUIZ_URLS.CREATE_QUIZ, data);
       console.log(response.data.data.code)
       setIsModalOpen(false); // Close the modal
       // console.log(response.data);
       setCode(response.data.data.code)
-      console.log(code)
+      console.log(response.data);
+
       handleOpenCodeModal();
-      
+
     } catch (error) {
       console.log("Error adding group:", error);
-    //   setError("Error adding group.");
+      //   setError("Error adding group.");
     }
   };
   return (
     <>
       <div className="flex gap-8">
         <div
-        onClick={() => setIsModalOpen(true)}
+          onClick={() => setIsModalOpen(true)}
           style={{
             border: "1px solid black",
             borderRadius: "10px",
@@ -171,14 +183,14 @@ function QuizzesIcons() {
 
       <div>
         {/* Modal */}
-              {isModalOpen && (
-                <form onSubmit={handleSubmit(handleAddQuiz)}>
-                  <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50">
-                  <div className="text-center bg-white p-9 rounded-md shadow-md w-[60vw]">
-                    {/* Modal Header */}
-                    <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+        {isModalOpen && (
+          <form onSubmit={handleSubmit(handleAddQuiz)}>
+            <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50">
+              <div className="text-center bg-white p-9 rounded-md shadow-md w-[60vw]">
+                {/* Modal Header */}
+                <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
                   <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                  {isEditing ? "Update Quiz" : "Set up a new Quiz"}
+                    {isEditing ? "Update Quiz" : "Set up a new Quiz"}
                   </h2>
                   <button
                     type="submit"
@@ -219,126 +231,127 @@ function QuizzesIcons() {
                     </svg>
                   </button>
                 </div>
-                    {/* Quiz Title Input */}
-                    <div className="flex">
-         <label style={{ backgroundColor: 'rgba(255, 237, 223, 1)' }} className="block border rounded text-sm font-medium mb-3 px-2 ">Title</label>
-        
-               <input
-        
-                      type="text"
-                      placeholder="Enter Quiz Title"
-                      className="w-full p-2 border rounded mb-3"
-                      {...register("title",{required:"this field is required"})}
+                {/* Quiz Title Input */}
+                <div className="w-100 text-center py-2">
+                  <input
+                    className="w-[95%] p-2.5 border border-gray-300 rounded-lg bg-gradient-to-r from-[#FFEDDF] via-[#ffffff] to-[#ffffff] bg-[length:100%_100%] bg-no-repeat text-black"
+                    placeholder="Title"
+                    {...register("title", { required: "this field is required" })}
+                    type="text"
                   />
-                   {errors?.name&&<span className='text-red-500'>{errors?.title?.message}</span>}
-                    </div>
-                   <div className="flex">
-                   <div className="flex">
-                      {/* Duration (in minutes) */}
-                      <label style={{ backgroundColor: 'rgba(255, 237, 223, 1)' }} className="block text-sm font-medium mb-3 px-2 ">Duration (in minutes)</label>
-                      <input
-                      type="number"
-                      {...register("duration",{required:"this field is required"})}
-                      className="w-full p-2 border rounded mb-3"
-                  />
-                  {errors?.duration &&<span className='text-red-500'>{errors?.duration?.message}</span>}
-            </div>
-            <div className="flex">
-                      {/* No. of questions */}
-                      <label style={{ backgroundColor: 'rgba(255, 237, 223, 1)' }} className="block text-sm font-medium mb-3 px-2 ">No. of questions</label>
-                      <input
-                      type="number"
-                      {...register("questions_number",{required:"this field is required"})}
-                      className="w-full p-2 border rounded mb-3"
-                  />
-                  {errors?.questions_number &&<span className='text-red-500'>{errors?.questions_number?.message}</span>}
-            </div>
-            <div className="flex">
-                      {/* Score per question */}
-                      <label style={{ backgroundColor: 'rgba(255, 237, 223, 1)' }} className="block text-sm font-medium mb-3 px-2 ">Score per question</label>
-                      <input
-                      type="text"
-                      className="w-full p-2 border rounded mb-3"
-                      {...register("score_per_question",{required:"this field is required"})}
-                  />
-                  {errors?.score_per_question &&<span className='text-red-500'>{errors?.score_per_question?.message}</span>}
-            </div>
-                   </div>
-                   <div className="flex">
-                   {/* description  */}
-         <label style={{ backgroundColor: 'rgba(255, 237, 223, 1)' }} className="block border rounded text-sm font-medium mb-3 px-2 ">Description</label>
-        <textarea  id=""  className="w-full p-2 border rounded mb-3"
-        {...register("description")}
-        >
-
-        </textarea>
-        
-                    </div>
-                    <div className="flex">
-                      {/* Schedule */}
-                      <label style={{ backgroundColor: 'rgba(255, 237, 223, 1)' }} className="block text-sm font-medium mb-3 px-2">Schedule</label>
-                      <input
-                      type="datetime-local"
-                      className=" p-2 border rounded mb-3"
-                      {...register("schadule",{required:"this field is required"})}
-                  />
-                   {errors?.schadule &&<span className='text-red-500'>{errors?.schadule?.message}</span>}
-                   </div>
-                   <div className="flex">
-                   <div className="flex">
-                      {/* diffculty */}
-                      <label style={{ backgroundColor: 'rgba(255, 237, 223, 1)' }} className="block text-sm font-medium mb-3 px-2 ">Difficulty leve</label>
-                      <select
-              className="w-full p-2 border rounded mb-3"
-              {...register("difficulty",{required:"this field is required"})}
-            >
-              <option value="">difficulty level</option>
-              <option value="entry">easy</option>
-              <option value="medium">medium</option>
-              <option value="hard">hard</option>
-            </select>
-            {errors?.difficulty &&<span className='text-red-500'>{errors?.difficulty?.message}</span>}
-            </div>
-            <div className="flex">
-                      {/*Category type*/}
-                      <label style={{ backgroundColor: 'rgba(255, 237, 223, 1)' }} className="block text-sm font-medium mb-3 px-2 ">Category type</label>
-                      <select
-                      {...register('type')}
-              className="w-full p-2 border rounded mb-3"
-            >
-              <option value="FE">FE</option>
-              <option value="BE">BE</option>
-              <option value="DO">DO</option>
-            </select>
-            </div>
-            <div className="flex">
-                      {/* Group name */}
-                               <label style={{ backgroundColor: 'rgba(255, 237, 223, 1)' }} className="block text-sm font-medium mb-3 px-2 ">Group name</label>
-                     
-                                 <select 
-                                 {...register("group",{required:"this field is required"})}
-                                 className="w-full p-2 border rounded mb-3"
-                               >
-                                 <option value="">group name</option>
-                                 {groups?.map(group => <option value={group._id} key={group._id}>{group.name}</option>)}
-                                 
-                               </select>
-                               {errors?.group &&<span className='text-red-500'>{errors?.group?.message}</span>}      
-             
-            </div>
-                   </div>
-            
-                  </div>
                 </div>
-                </form>
+
+                <div className="flex w-full justify-between px-5">
+                  <div className=" text-center py-2 grow">
+                    <input
+                      className="w-[95%] p-2.5 border border-gray-300 rounded-lg bg-gradient-to-r from-[#FFEDDF] via-[#ffffff] to-[#ffffff] bg-[length:100%_100%] bg-no-repeat text-black"
+                      placeholder="Duration (in minutes) "
+                      {...register("duration", { required: "this field is required" })}
+                      type="text"
+                    />
+                    {errors?.duration && <span className='text-red-500'>{errors?.duration?.message}</span>}
+                  </div>
+                  <div className=" text-center py-2 grow">
+                    <input
+                      className="w-[95%] p-2.5 border border-gray-300 rounded-lg bg-gradient-to-r from-[#FFEDDF] via-[#ffffff] to-[#ffffff] bg-[length:100%_100%] bg-no-repeat text-black"
+                      placeholder="No. of questions "
+                      {...register("questions_number", { required: "this field is required" })}
+                      type="text"
+                    />
+                    {errors?.questions_number && <span className='text-red-500'>{errors?.questions_number?.message}</span>}
+                  </div>
+                  <div className=" text-center py-2 grow">
+                    <input
+                      className="w-[95%] p-2.5 border border-gray-300 rounded-lg bg-gradient-to-r from-[#FFEDDF] via-[#ffffff] to-[#ffffff] bg-[length:100%_100%] bg-no-repeat text-black"
+                      placeholder="Score per question "
+                      {...register("score_per_question", { required: "this field is required" })}
+                      type="text"
+                    />
+                    {errors?.score_per_question && <span className='text-red-500'>{errors?.score_per_question?.message}</span>}
+                  </div>
+
+
+                </div>
+                <div className=" text-center py-2 grow">
+                  {/* description  */}
+
+                  <textarea
+                    placeholder="Description"
+                    id="" className="w-[95%] p-2.5 border border-gray-300 rounded-lg bg-gradient-to-r from-[#FFEDDF] via-[#ffffff] to-[#ffffff] bg-[length:100%_100%] bg-no-repeat text-black"
+                    {...register("description")}
+                  >
+
+                  </textarea>
+
+                </div>
+                <div className="flex text-center ps-5 pb-2">
+                  {/* Schedule */}
+
+                  <input
+                    type="datetime-local"
+                    className="w-[95%] p-2.5 border border-gray-300 rounded-lg bg-gradient-to-r from-[#FFEDDF] via-[#ffffff] to-[#ffffff] bg-[length:100%_100%] bg-no-repeat text-black"
+                    {...register("schadule", { required: "this field is required" })}
+                  />
+                  {errors?.schadule && <span className='text-red-500'>{errors?.schadule?.message}</span>}
+                </div>
+                <div className="flex">
+
+                  {/* diffculty */}
                 
-              )}
-       <CodeModal
-       isOpen={isModalCodeOpen}
-       onClose={handleCloseCodeModal}
-       code = {code}
-       />
-    </div>
+                    <select
+                      className=" mx-4 grow border border-gray-300 rounded-lg  text-black"
+                      {...register("difficulty", { required: "this field is required" })}
+                    >
+                      <option value="" disabled>difficulty level</option>
+                      <option value="easy">easy</option>
+                      <option value="medium">medium</option>
+                      <option value="hard">hard</option>
+                    </select>
+                    {errors?.difficulty && <span className='text-red-500'>{errors?.difficulty?.message}</span>}
+
+
+                  
+
+                  {/*Category type*/}
+
+                  <select
+                    {...register('type')}
+                    className="mx-4 grow border border-gray-300 rounded-lg  text-black"
+                  >
+
+                    <option value="" disabled>Type</option>
+                    <option value="FE">FE</option>
+                    <option value="BE">BE</option>
+                    <option value="DO">DO</option>
+                  </select>
+
+                  {/* Group name */}
+
+
+                  <select
+                    {...register("group", { required: "this field is required" })}
+                    className="mx-4 grow border border-gray-300 rounded-lg  text-black"
+                  >
+                    <option value="" disabled>group name</option>
+                    {groups?.map(group => <option value={group._id} key={group._id}>{group.name}</option>)}
+
+                  </select>
+                  {errors?.group && <span className='text-red-500'>{errors?.group?.message}</span>}
+
+
+                </div>
+
+              </div>
+            </div>
+          </form>
+
+        )}
+        <CodeModal
+          isOpen={isModalCodeOpen}
+          onClose={handleCloseCodeModal}
+          code={code}
+        />
+      </div>
     </>
   );
 }

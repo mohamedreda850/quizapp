@@ -4,14 +4,14 @@ import { Link } from 'react-router-dom'
 
 export default function CompletedQuizes() {
   const [quizes, setQuizes] = useState([])
-  const completedQuizes = async () => {
+  
+
+  useEffect(() => {const getcompletedQuizes = async () => {
     const { data } = await axiosInstance.get(RESULT_URLS.LAST_FIVE_COMPLETED)
     console.log(data)
     setQuizes(data)
   }
-
-  useEffect(() => {
-    completedQuizes()
+    getcompletedQuizes()
   }, [])
   return (
     <div className='m-7 border border-gray-300 p-5 rounded-md'>
