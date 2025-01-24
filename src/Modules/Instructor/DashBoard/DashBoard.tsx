@@ -1,167 +1,89 @@
-import { Typography } from '@mui/material';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid2';
-import img from '../../../assets/Images/img.png'
-import user from '../../../assets/images/user img.png'
-import Divider from '@mui/material/Divider';
-import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
-import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
-import { useEffect, useState } from 'react';
-import { axiosInstance, QUIZ_URLS, STUDENT_URLS } from '../../../Services/URLS/INSTRUCTOR_URLS/INSTRUCTORURLS';
-// import { useQuizIncommingQuery, useTopFiveStudentQuery } from '../../../../redux/api/apiSlice';
-
-interface studentData {
-  first_name: string,
-  last_name: string,
-  avg_score: number
-}
-
-export default function Dashboard() {
-  const [quizzes, setQuizzes] = useState([])
-  const [students, setStudents] = useState([])
-  // const {data: quizzes, isLoading: isLoadingQuiz} = useQuizIncommingQuery()
-  // const {data: students, isLoading: isLoadingStudent} = useTopFiveStudentQuery()
-
-  // if (isLoadingQuiz) return <Typography>Loading quizzes and students...</Typography>;
-  // if (isLoadingStudent) return <Typography>Loading students...</Typography>;
-
-  const getQuizzes = async () => {
+import img1 from "./../../../assets/Images/img-2.png";
+import img2 from "./../../../assets/Images/img3.png";
+import userImg1 from "./../../../assets/Images/user img-2.png";
+import userImg2 from "./../../../assets/Images/user img.png";
+import userImg3 from "./../../../assets/Images/user img-3.png";
+import { useEffect, useState } from "react";
+import {
+  axiosInstance,
+  RESULT_URLS,
+  STUDENT_URLS,
+} from "../../../Services/URLS/INSTRUCTOR_URLS/INSTRUCTORURLS";
+export default function DashBoard() {
+  const [students, setStudents] = useState([]);
+  const [quizes, setQuizes] = useState([]);
+  const userImages = [userImg1, userImg2, userImg3];
+  const getUpcomingQuizes = async () => {
     try {
-      const res = await axiosInstance.get(QUIZ_URLS.QUIZ_INCOMMING)
-      console.log(res);
-      
-      // setQuizzes(res)
+      const { data } = await axiosInstance.get(
+        RESULT_URLS.FIRST_FIVE_INCOMMING
+      );
+      console.log(data);
+      setQuizes(data);
     } catch (error) {
       console.log(error);
     }
-  }
-
-  const getStudents = async () => {
+  };
+  const getTopFiveStudents = async () => {
     try {
-      const res = await axiosInstance.get(STUDENT_URLS.TOP_FIVE_STUDENT)
-      console.log(res);
-      
-      setStudents(res?.data)
+      const { data } = await axiosInstance.get(STUDENT_URLS.TOP_FIVE_STUDENT);
+      console.log(data);
+      setStudents(data);
     } catch (error) {
       console.log(error);
     }
-  }
-
+  };
   useEffect(() => {
-    getQuizzes()
-    getStudents()
-  }, [])
-
+    getTopFiveStudents();
+    getUpcomingQuizes();
+  }, []);
   return (
-    <Box component="section" sx={{padding: '30px'}}>
-       <Grid container spacing={4}>
-        <Grid size={6}>
-          <Box className="quizzes" sx={{border: '1px solid #00000033', borderRadius: '10px', padding: '15px'}}>
-            <Box className="flex items-center justify-between pb-4">
-              <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '20px'}}>Upcoming 5 quizzes</Typography>
-              <Typography className='flex items-center gap-1' variant='body1' sx={{fontSize: '12px'}}>Quiz directory <ArrowRightAltIcon sx={{color: '#C5D86D', fontSize: '30px'}}/></Typography>
-            </Box>
-            <Box className="cards flex flex-col gap-4">
-              {quizzes.map((quiz) => {
-                return  <Box className="card flex items-center gap-5" sx={{border: '1px solid #00000033', borderRadius: '10px'}}>
-                          <Box sx={{backgroundColor: '#FFEDDF', p: 2, borderRadius: '10px'}}>
-                            <img style={{minWidth: '92px', maxWidth: '92px', minHeight: '92px', maxHeight: '92px'}} src={img} alt="" />
-                          </Box>
-                          <Box>
-                            <Typography variant='body1' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '18px'}}>Introduction to computer programming</Typography>
-                            <Box sx={{display: 'flex', marginBottom: '20px'}}>
-                              <Typography className='pr-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>12 / 03 / 2023</Typography>
-                              <Divider orientation="vertical" variant="fullWidth" flexItem />
-                              <Typography className='pl-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>09:00 AM</Typography>
-                            </Box>
-                            <Box className="flex justify-between">
-                              <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '14px'}}>No. of student’s enrolled: 32</Typography>
-                              <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>Open <ArrowCircleRightIcon sx={{color: '#C5D86D'}}/></Typography>
-                            </Box>
-                          </Box>
-                        </Box>
-              })}
-              <Box className="card flex items-center gap-5" sx={{border: '1px solid #00000033', borderRadius: '10px'}}>
-                <Box sx={{backgroundColor: '#FFEDDF', p: 2, borderRadius: '10px'}}>
-                  <img style={{minWidth: '92px', maxWidth: '92px', minHeight: '92px', maxHeight: '92px'}} src={img} alt="" />
-                </Box>
-                <Box>
-                  <Typography variant='body1' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '18px'}}>Introduction to computer programming</Typography>
-                  <Box sx={{display: 'flex', marginBottom: '20px'}}>
-                    <Typography className='pr-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>12 / 03 / 2023</Typography>
-                    <Divider orientation="vertical" variant="fullWidth" flexItem />
-                    <Typography className='pl-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>09:00 AM</Typography>
-                  </Box>
-                  <Box className="flex justify-between">
-                    <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '14px'}}>No. of student’s enrolled: 32</Typography>
-                    <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>Open <ArrowCircleRightIcon sx={{color: '#C5D86D'}}/></Typography>
-                  </Box>
-                </Box>
-              </Box>
-              <Box className="card flex items-center gap-5" sx={{border: '1px solid #00000033', borderRadius: '10px'}}>
-                <Box sx={{backgroundColor: '#FFEDDF', p: 2, borderRadius: '10px'}}>
-                  <img style={{minWidth: '92px', maxWidth: '92px', minHeight: '92px', maxHeight: '92px'}} src={img} alt="" />
-                </Box>
-                <Box>
-                  <Typography variant='body1' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '18px'}}>Introduction to computer programming</Typography>
-                  <Box sx={{display: 'flex', marginBottom: '20px'}}>
-                    <Typography className='pr-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>12 / 03 / 2023</Typography>
-                    <Divider orientation="vertical" variant="fullWidth" flexItem />
-                    <Typography className='pl-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>09:00 AM</Typography>
-                  </Box>
-                  <Box className="flex justify-between">
-                    <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '14px'}}>No. of student’s enrolled: 32</Typography>
-                    <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>Open <ArrowCircleRightIcon sx={{color: '#C5D86D'}}/></Typography>
-                  </Box>
-                </Box>
-              </Box>
-              <Box className="card flex items-center gap-5" sx={{border: '1px solid #00000033', borderRadius: '10px'}}>
-                <Box sx={{backgroundColor: '#FFEDDF', p: 2, borderRadius: '10px'}}>
-                  <img style={{minWidth: '92px', maxWidth: '92px', minHeight: '92px', maxHeight: '92px'}} src={img} alt="" />
-                </Box>
-                <Box>
-                  <Typography variant='body1' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '18px'}}>Introduction to computer programming</Typography>
-                  <Box sx={{display: 'flex', marginBottom: '20px'}}>
-                    <Typography className='pr-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>12 / 03 / 2023</Typography>
-                    <Divider orientation="vertical" variant="fullWidth" flexItem />
-                    <Typography className='pl-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>09:00 AM</Typography>
-                  </Box>
-                  <Box className="flex justify-between">
-                    <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '14px'}}>No. of student’s enrolled: 32</Typography>
-                    <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>Open <ArrowCircleRightIcon sx={{color: '#C5D86D'}}/></Typography>
-                  </Box>
-                </Box>
-              </Box>
-            </Box>
-          </Box>
-        </Grid>
+    <div className="flex">
+      <div className="border p-5 rounded-md w-[50%] m-6 ">
+        <h1 className="mb-2">Upcoming 5 quizzes</h1>
+        {quizes?.map((quiz, index) => (
+          <div key={index} className="flex items-center border rounded-md mt-2">
+            <div className="me-2 bg-[#ffeddf]">
+              <img src={index % 2 ? img1 : img2} className="" alt="" />
+            </div>
+            <div className="p-3">
+              <h2 className="text-md mb-2">{quiz.title}</h2>
 
-        <Grid size={6}>
-          <Box className="students" sx={{border: '1px solid #00000033', borderRadius: '10px', padding: '15px'}}>
-            <Box className="flex items-center justify-between pb-4">
-              <Typography variant='h4' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '20px'}}>Top 5 Students</Typography>
-              <Typography className='flex items-center gap-1' variant='body1' sx={{fontSize: '12px'}}>All Students  <ArrowRightAltIcon sx={{color: '#C5D86D', fontSize: '30px'}}/></Typography>
-            </Box>
-            <Box className="cards flex flex-col gap-4">
-              {students.map((student: studentData) => {
-                return  <Box className="card flex items-center gap-5" sx={{border: '1px solid #00000033', borderRadius: '10px'}}>
-                          <Box sx={{ borderRadius: '10px'}}>
-                            <img style={{minWidth: '70px', maxWidth: '70px', minHeight: '70px', maxHeight: '70px'}} src={user} alt="" />
-                          </Box>
-                          <Box>
-                            <Typography variant='body1' sx={{fontFamily: 'Nunito', fontWeight: 700, fontSize: '18px'}}>{student.first_name} {student.last_name}</Typography>
-                            <Box sx={{display: 'flex'}}>
-                              <Typography className='pr-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>Class rank: 2nd</Typography>
-                              <Divider orientation="vertical" variant="fullWidth" flexItem />
-                              <Typography className='pl-4' sx={{fontFamily: 'Nunito', fontWeight: 400, fontSize: '14px'}}>Average score: {student.avg_score}%</Typography>
-                            </Box>
-                          </Box>
-                        </Box>
-              })}
-            </Box>
-          </Box>
-        </Grid>
-      </Grid>
-    </Box>
-  )
+              <p className="font-thin text-xs">
+                {new Date(quiz.schadule).toLocaleDateString()} |{" "}
+                {new Date(quiz.schadule).toLocaleTimeString()}
+              </p>
+              <p className="text-xs">
+                number of students enrolled : {quiz.participants}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="border p-5 rounded-md w-[40%] m-6 ">
+        <h1 className="mb-2">Upcoming 5 quizzes</h1>
+        {students?.map((student, index) => (
+          <div key={index} className="flex items-center border rounded-md mt-2">
+            <div className="me-2 bg-[#ffeddf]">
+              <img
+                src={userImages[index % userImages.length]}
+                className=""
+                alt=""
+              />
+            </div>
+            <div className="p-1">
+              <h2 className="text-md mb-2">
+                {student.first_name} {student.last_name}
+              </h2>
+
+              <p className="font-thin text-xs">
+                avrage score : {student.avg_score}{" "}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }

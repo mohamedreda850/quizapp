@@ -1,9 +1,8 @@
-import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { axiosInstance, QUIZ_URLS, RESULT_URLS } from '../../../../Services/URLS/INSTRUCTOR_URLS/INSTRUCTORURLS'
+import { axiosInstance, RESULT_URLS } from '../../../Services/URLS/INSTRUCTOR_URLS/INSTRUCTORURLS'
 import { Link } from 'react-router-dom'
 
-export default function Results() {
+export default function Result() {
   const [quizes, setQuizes] = useState([])
   const completedQuizes = async () => {
     const { data } = await axiosInstance.get(RESULT_URLS.LAST_FIVE_COMPLETED)
@@ -37,9 +36,7 @@ export default function Results() {
               <th scope="col" className="px-6 py-3">
                 Date
               </th>
-              <th scope="col" className="px-6 py-3">
-
-              </th>
+             
             </tr>
           </thead>
           <tbody>
@@ -54,9 +51,7 @@ export default function Results() {
               <td className="px-6 py-4">
                 date
               </td>
-              <td className="px-6 py-4">
-                <button className='bg-text px-2 py-1 rounded-md text-black'><Link to=''>View</Link></button>
-              </td>
+              
             </tr>))}
 
 

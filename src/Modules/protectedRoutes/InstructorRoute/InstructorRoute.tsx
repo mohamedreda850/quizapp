@@ -1,7 +1,7 @@
 import { Navigate, useNavigate } from "react-router-dom"
 
 export default function InstructorRoute({children} :any) {
-  const navigate = useNavigate()
+ 
   const userData:string|null = localStorage.getItem("quizUser")
   const acssesToken = localStorage.getItem("quizToken")  
   const parsedUserData:Object = JSON.parse(userData)

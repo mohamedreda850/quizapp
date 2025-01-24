@@ -56,6 +56,7 @@ export default function Register() {
         <div className='flex'>
           <div className='basis-1/2'>
           <TextFeild 
+          type={'text'}
           placeholder="Type your first name"
           icon={<FaAddressCard />}
           label="Your first name"
@@ -68,6 +69,7 @@ export default function Register() {
           <div className='basis-1/2'>
           <TextFeild 
           placeholder="Type your Last name"
+          type={'text'}
           icon={<FaAddressCard />}
           label="Your Last name"
           registerfunction={register('last_name', {
@@ -83,6 +85,7 @@ export default function Register() {
         <TextFeild 
           placeholder="Type your email"
           icon={<MdEmail />}
+          type={"text"}
           label="Type your email"
           registerfunction={register('email', EMAIL_VALIDATION)}
           error={errors?.email?.message}
@@ -112,6 +115,7 @@ export default function Register() {
         <TextFeild 
           placeholder="Type your password"
           icon={<FaKey />}
+          type={"password"}
           label="Password"
           registerfunction={register('password', PASWORD_VALIDATION)}
           error={errors?.password?.message}

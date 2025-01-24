@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { LuTimer } from "react-icons/lu";
-import { useNavigate } from "react-router-dom";
-import { axiosInstance, GROPU_URLS, QUIZ_URLS } from "../../../../Services/URLS/INSTRUCTOR_URLS/INSTRUCTORURLS";
-import { FaCopy } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import img1 from "../../../../../assets/Images/new quiz icon.png";
+import img2 from "../../../../../assets/Images/Vault icon.png";
+
+import React, { useEffect, useState } from 'react';
 import { MdDone } from "react-icons/md";
-import { useForm } from "react-hook-form";
+import { AiOutlineClose } from "react-icons/ai";
+import { FaCopy } from "react-icons/fa";
+import { useForm } from 'react-hook-form';
+import { axiosInstance, GROPU_URLS, QUIZ_URLS } from "../../../../../Services/URLS/INSTRUCTOR_URLS/INSTRUCTORURLS";
 
 interface Quiz {
   title: string;
@@ -24,6 +27,9 @@ interface Group {
   name: string;
   _id?: string;
 }
+
+
+// code modal 
 const CodeModal: React.FC<{
   isOpen: boolean;
   onClose: () => void;
@@ -71,48 +77,45 @@ const CodeModal: React.FC<{
     </div>
   );
 };
-export default function NavBar() {
-  
-  const navigate = useNavigate();
-  const data = localStorage.getItem("quizUser");
-  const parsedData = JSON.parse(data);
- const [isModalOpen, setIsModalOpen] = useState(false);
+function QuizzesIcons() {
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalCodeOpen, setIsModaCodelOpen] = useState(false);
-   const [code, setCode] = useState('');
-    const [groups, setGroups] = useState<Group[]>([]);
-    const [isEditing, setIsEditing] = useState(false);
-  const role = parsedData?.role;
+  const [isEditing, setIsEditing] = useState(false);
+  const [code, setCode] = useState('');
+  const [groups, setGroups] = useState<Group[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
   const handleOpenCodeModal = () => {
-      setIsModaCodelOpen(true);
-    };
-  
-    const handleCloseCodeModal = () => {
-      setIsModaCodelOpen(false);
-      setCode('');
-    };
-  
-    const {
-      formState: { isSubmitting, errors },
-      handleSubmit,
-      register,
-      
-    } = useForm({ mode: "onChange" });
-  const routeName = {
-    "/instructor": "Dashboard",
-    "/instructor/dashboard": "Dashboard",
-    "/instructor/groups": "Groups",
-    "/instructor/quistion-bank": "Questions",
-    "/instructor/students": "Students",
-    "/instructor/quizes": "Quizes",
-    "/instructor/result": "Result",
-    "/student": "Dashboard",
-    "/student/dashboard": "Dashboard",
-    "/student/result": "result",
-
-    "/student/exam": "Exam",
+    setIsModaCodelOpen(true);
   };
-  const currentRoute = routeName[location.pathname] || "Page Not Found";
 
+  const handleCloseCodeModal = () => {
+    setIsModaCodelOpen(false);
+    setCode('');
+  };
+
+  const {
+    formState: { isSubmitting, errors },
+    handleSubmit,
+    register,
+    setValue
+  } = useForm({ mode: "onChange" });
+
+  const getGroupList = async () => {
+    try {
+      const response = await axiosInstance.get(GROPU_URLS.GET_GRUOP);
+      setGroups(response.data);
+      setError(null);
+    } catch (error) {
+      setError("Error fetching groups.");
+      console.error("Error fetching groups:", error);
+    }
+  };
+
+  useEffect(() => {
+    getGroupList();
+  }, []);
 
   const handleAddQuiz = async (data: Quiz) => {
     try {
@@ -130,96 +133,55 @@ export default function NavBar() {
       //   setError("Error adding group.");
     }
   };
-
-  const getGroupList = async () => {
-    try {
-      const response = await axiosInstance.get(GROPU_URLS.GET_GRUOP);
-      setGroups(response.data);
-      
-    } catch (error) {
-      
-      console.error("Error fetching groups:", error);
-    }
-  };
-
-  useEffect(() => {
-    getGroupList();
-  }, []);
-
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-  const logOut = () => {
-    localStorage.removeItem("quizUser");
-    localStorage.removeItem("quizToken");
-    navigate("/");
-  }
   return (
-    
     <>
-    <nav className="bg-white border-b border-gray-300 ">
-      <div className="max-w-screen-xl mx-auto flex items-center justify-between p-4">
-
-
-        <div className="text-lg font-semibold">{currentRoute}</div>
-
-        {role == "Instructor" && <button onClick={() => setIsModalOpen(true)}className="flex items-center ml-auto mr-5 px-4 py-2 border rounded-full text-sm font-medium text-black hover:bg-gray-100">
-
-          <LuTimer className="mr-2" />
-          New Quiz
-        </button>}
-
-
-
-
-        <div className="flex items-center space-x-4">
-
-          <div className="text-left">
-
-            <h2 className="text-sm font-semibold">{parsedData.first_name} {parsedData.last_name}</h2>
-
-            <p className="text-xs text-text">{parsedData.role}</p>
-          </div>
-
-
-          <div className="relative">
-            <button
-
-              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-              className="p-2 rounded-lg hover:bg-gray-100"
-            >
-
-              <svg
-                className="w-5 h-5"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="currentColor"
-                viewBox="0 0 4 15"
-              >
-                <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
-              </svg>
-            </button>
-
-
-            <div
-
-              className={`absolute right-0 mt-2 w-44 bg-white border border-gray-200 rounded-lg shadow-lg ${isDropdownOpen ? "block" : "hidden"
-                }`}
-            >
-
-
-              <div className="py-2">
-                <button
-                  onClick={logOut}
-                  className="block px-4 py-2 w-full text-sm text-gray-700 hover:bg-gray-100"
-                >
-                  Logout
-                </button>
-              </div>
-            </div>
-          </div>
+      <div className="flex gap-8">
+        <div
+          onClick={() => setIsModalOpen(true)}
+          style={{
+            border: "1px solid black",
+            borderRadius: "10px",
+            width: "13rem",
+            height: "8rem",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <img className="mt-5" src={img1} alt="" />
+          <p
+            className="my-3"
+            style={{ fontWeight: "700", fontSize: "1.25rem" }}
+          >
+            Set up a new quiz
+          </p>
         </div>
+        <Link to="/instructor/quistion-bank">
+          <div
+            style={{
+              border: "1px solid black",
+              borderRadius: "10px",
+              width: "13rem",
+              height: "8rem",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <img className="mt-5" src={img2} alt="" />
+            <p
+              className="my-2"
+              style={{ fontWeight: "700", fontSize: "1.25rem" }}
+            >
+              Question Bank
+            </p>
+          </div>
+        </Link>
       </div>
-    </nav>
-    <div>
+
+      <div>
         {/* Modal */}
         {isModalOpen && (
           <form onSubmit={handleSubmit(handleAddQuiz)}>
@@ -393,3 +355,5 @@ export default function NavBar() {
     </>
   );
 }
+
+export default QuizzesIcons;

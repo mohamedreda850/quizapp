@@ -10,10 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@mui/icons-material": "^6.3.1",
-    "@mui/material": "^6.3.1",
     "@reduxjs/toolkit": "^2.5.0",
     "axios": "^1.7.9",
     "flowbite": "^2.5.2",
@@ -25,6 +21,7 @@
     "react-pro-sidebar": "^1.1.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.1.1",
+    "react-select": "^5.9.0",
     "react-toastify": "^11.0.2"
   },
   "devDependencies": {

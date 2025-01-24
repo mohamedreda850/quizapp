@@ -10,9 +10,9 @@ export default function InstructorLayout() {
         <NavBar />
       </div>
       <div className='flex'>
-        <div>
+        
           <SideBar />
-        </div>
+        
         <div className='w-full'>
           <Outlet />
         </div>

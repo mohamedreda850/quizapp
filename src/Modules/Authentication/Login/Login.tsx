@@ -21,19 +21,24 @@ export default function Login() {
     register,
     handleSubmit,
     formState: { errors },
+    
   } = useForm();
   const navigate = useNavigate();
   const Submit = async (data: LoginData) => {
     try {
       const res = await axiosInstance.post(AUTH_URLS.LOGIN, data);
 
+
       const userData =JSON.stringify( res?.data?.data?.profile)
       console.log("userData" , userData);
       
       localStorage.setItem("quizUser" , userData)
       localStorage.setItem("quizToken", res?.data?.data?.accessToken);
+      
+      const role = res.data.data.profile.role
+  
+      navigate(role === "Student" ? '/student' : '/instructor');
 
-      navigate("/instructor");
     } catch (error) {
       console.log(error);
     }
@@ -55,6 +60,7 @@ export default function Login() {
           registerfunction: {
             ...register("email", { required: "emal is required" }),
           },
+          type:'text',
           error: errors.email && errors.email.message,
         })}
 
@@ -62,6 +68,7 @@ export default function Login() {
           {TextFeild({
             placeholder: "Type your Password",
             icon: <FaKey />,
+            type: "password",
             label: "Password",
             registerfunction: {
               ...register("password", { required: "Password Is Required" }),
@@ -84,7 +91,7 @@ export default function Login() {
             </button>
           </div>
           <div>
-            <p>
+            <p style={{color:"white"}}>
               Forgot password?{" "}
               <Link
                 style={{ textDecoration: "underline" }}
